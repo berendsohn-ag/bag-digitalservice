@@ -26,11 +26,6 @@ add_action('plugins_loaded', function () {
         $updater->setBranch('main');
     }
 
-    // 🔑 avoid 403/rate-limit (put token in wp-config.php)
-    if ( defined('BDS_UPDATER_TOKEN') && BDS_UPDATER_TOKEN && method_exists($updater, 'setAuthentication') ) {
-        $updater->setAuthentication(BDS_UPDATER_TOKEN);
-    }
-
     // Prefer release assets if you attach ZIPs to releases
     if ( method_exists($updater, 'getVcsApi') ) {
         $api = $updater->getVcsApi();
