@@ -17,7 +17,7 @@ add_action('plugins_loaded', function () {
     }
 
     $updater = $factory::buildUpdateChecker(
-        'https://github.com/freiraum-kd/berendsohn-digitalservice/',
+        'https://github.com/berendsohn-ag/bag-digitalservice/',
         BDS_FILE,
         plugin_basename(BDS_FILE)
     );
