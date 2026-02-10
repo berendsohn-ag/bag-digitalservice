@@ -36,7 +36,7 @@ class Shortcodes {
 
         foreach ( $map as $shortcode => $filename ) {
             add_shortcode( $shortcode, function( $atts = [] ) use ( $filename ) {
-                // Wichtig: nur Dateiname übergeben (Helpers hängt texts/ vermutlich selbst an)
+                // Wichtig: nur Dateiname übergeben (Helpers hängt texts/ selbst an)
                 return Helpers::read_text( $filename );
             } );
         }
@@ -47,9 +47,10 @@ class Shortcodes {
         // 3) AJAX Liste für Editor-Picker
         add_action( 'wp_ajax_bds_shortcodes_list', [ __CLASS__, 'ajax_shortcodes_list' ] );
 
-        // 4) JS für YOOtheme/TinyMCE Button laden (Admin + Builder-Frame)
-        add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_editor_picker_script' ] );
-        add_action( 'wp_enqueue_scripts',    [ __CLASS__, 'enqueue_editor_picker_script_frontend' ], 20 );
+        // 4) JS für Button laden (Admin + Block-Editor + Builder-Frame)
+        add_action( 'admin_enqueue_scripts',        [ __CLASS__, 'enqueue_editor_picker_script' ] );
+        add_action( 'enqueue_block_editor_assets',  [ __CLASS__, 'enqueue_editor_picker_script' ] ); // ✅ wichtig für Gutenberg
+        add_action( 'wp_enqueue_scripts',           [ __CLASS__, 'enqueue_editor_picker_script_frontend' ], 20 );
     }
 
     public static function enqueue_public() {
@@ -66,13 +67,20 @@ class Shortcodes {
 
     /**
      * AJAX: Liefert Shortcode-Liste
+     *
+     * ✅ Fix: Nonce nur prüfen, wenn er wirklich mitgeschickt wurde.
+     * (Builder/Frames verlieren manchmal wp_localize_script → nonce ist leer → sonst tot)
      */
     public static function ajax_shortcodes_list() {
 
-        check_ajax_referer( 'bds_shortcodes_list', 'nonce' );
-
+        // Rechte zuerst
         if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
             wp_send_json_error( [ 'message' => 'Forbidden' ], 403 );
+        }
+
+        // Nonce optional (nur prüfen wenn vorhanden)
+        if ( isset($_POST['nonce']) && $_POST['nonce'] !== '' ) {
+            check_ajax_referer( 'bds_shortcodes_list', 'nonce' );
         }
 
         $list = self::get_available_shortcodes();
@@ -84,10 +92,14 @@ class Shortcodes {
     }
 
     /**
-     * Script im wp-admin laden
+     * Script im wp-admin + Block-Editor laden
      * Erwartet: assets/js/yoo-shortcode-button.js
      */
     public static function enqueue_editor_picker_script() {
+
+        if ( ! is_user_logged_in() ) {
+            return;
+        }
 
         if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
             return;
