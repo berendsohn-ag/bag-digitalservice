@@ -1,1 +1,1 @@
-Ich teste den Shortcode!
+Ich teste den Shortcode mit 3.0.0!
