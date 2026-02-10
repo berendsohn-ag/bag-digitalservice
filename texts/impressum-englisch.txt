@@ -1,0 +1,9 @@
+<h3>Dispute resolution</h3>
+<p>Online dispute resolution pursuant to Art. 14 para. 1 ODR-VO:
+The European Commission provides a platform for online dispute resolution (OS), which you can find at http://ec.europa.eu/consumers/odr.
+</p>
+<p>We do not participate in dispute resolution proceedings before a consumer arbitration board.</p>
+<h3>Copyright</h3>
+<p>The content and works created by the site operators on these pages are subject to German copyright law. Reproduction, editing, distribution and any kind of utilisation outside the limits of copyright law require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is labelled as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately.</p>
+<h3>Design & realisation</h3>
+<p>Berendsohn AG | <a href="https://www.berendsohn.de/" target="_blank" rel="noopener">www.berendsohn.de</a></p>

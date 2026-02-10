@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/* Berendsohn scheme: light greys + red accents (based on WP “Light”) */
+
+/* Base canvas */
+body, #wpwrap       { background:#f7f7f7; }
+#wpcontent, #wpbody { color:#1d2327; }
+
+/* Admin bar */
+#wpadminbar { background:#222222; }
+#wpadminbar .ab-item, #wpadminbar a.ab-item { color:#eeeeee; }
+#wpadminbar .ab-item:hover,
+#wpadminbar .ab-item:focus { background:#f00528; color:#ffffff; }
+
+/* Left menu */
+#adminmenuback, #adminmenuwrap, #adminmenu { background:#222222; }
+#adminmenu a { color:#dddddd; }
+#adminmenu a:hover, #adminmenu li.menu-top:hover > a { color:#ffffff; }
+#adminmenu .wp-has-current-submenu > a.menu-top,
+#adminmenu .current a.menu-top,
+#adminmenu .wp-menu-open > a.menu-top {
+  background:#f00528; color:#ffffff;
+}
+
+/* Primary buttons */
+.wp-core-ui .button-primary,
+.components-button.is-primary,
+#publish, .page-title-action {
+  background:#f00528; border-color:#f00528; color:#ffffff; box-shadow:none;
+}
+.wp-core-ui .button-primary:hover,
+.components-button.is-primary:hover,
+#publish:hover, .page-title-action:hover {
+  background:#c3041f; border-color:#c3041f;
+}
+
+/* Links in admin content areas */
+.wrap a, .notice a, .tablenav a, .row-actions a { color:#f00528; }
+.wrap a:hover, .notice a:hover, .tablenav a:hover, .row-actions a:hover { color:#c3041f; }
+
+/* Notices */
+.notice-info    { border-left-color:#f00528; }
+.notice-success { border-left-color:#46b450; }
+.notice-warning { border-left-color:#ffb900; }
+.notice-error   { border-left-color:#dc3232; }
+
+/* Cards/tables neutral */
+.postbox, .stuffbox { background:#ffffff; border-color:#e4e4e4; }
+
+/* Login page button (so it matches) */
+.login .button-primary { background:#f00528; border-color:#f00528; }
+.login .button-primary:hover { background:#c3041f; border-color:#c3041f; }

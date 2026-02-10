@@ -1,0 +1,6 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body.login { background: #f7f7f9; }
+#loginform { border-radius: 12px; padding: 24px; }
+.wp-core-ui .button-primary { border-radius: 8px; }

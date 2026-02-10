@@ -3,7 +3,7 @@
  * Plugin Name:       Berendsohn Digital Service
  * Plugin URI:        https://berendsohn-digitalservice.de
  * Description:       Übergeordnete Funktionen/Anpassungen für Berendsohn-Webseiten (Shortcodes, Login-Maske, Rollen, Design).
- * Version:           5.0.3
+ * Version:           7.0.6
  * Author:            Berendsohn
  * Author URI:        https://berendsohn-digitalservice.de
  * Text Domain:       berendsohn-digitalservice
@@ -13,7 +13,7 @@
 //Test Alex vom 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BDS_VERSION', '5.0.3' );
+define( 'BDS_VERSION', '1.0.0' );
 define( 'BDS_FILE', __FILE__ );
 define( 'BDS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BDS_URL', plugin_dir_url( __FILE__ ) );
@@ -27,19 +27,13 @@ if ( file_exists($__bds_updater) ) {
 require_once BDS_PATH . 'includes/helpers.php';
 require_once BDS_PATH . 'includes/class-shortcodes.php';
 require_once BDS_PATH . 'includes/class-login-mask.php';
-require_once BDS_PATH . 'includes/class-roles.php';
 require_once BDS_PATH . 'includes/class-admin-ui.php';
-require_once BDS_PATH . 'includes/class-schema.php';
-require_once BDS_PATH . 'includes/class-page-taxonomies.php';
 
 add_action( 'plugins_loaded', function() {
     load_plugin_textdomain( 'berendsohn-digitalservice', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     \BDS\Shortcodes::init();
     \BDS\Login_Mask::init();
-    \BDS\Roles::init();
     \BDS\Admin_UI::init();
-    \BDS\Schema::init();
-    \BDS\Page_Taxonomies::init();
 } );
 
 register_activation_hook( BDS_FILE, function () {

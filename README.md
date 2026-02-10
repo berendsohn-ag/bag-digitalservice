@@ -1,2 +1,0 @@
-# berendsohn-digitalservice
-Berendsohn Plugin

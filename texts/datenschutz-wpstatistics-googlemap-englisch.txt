@@ -1,0 +1,170 @@
+<h3>3. General Information on Data Processing</h3>
+<h4>3.1 Scope of Processing of Personal Data</h4>
+<p>We process your personal data only to the extent necessary to provide a functional website and to deliver our content and services, typically only after your consent. An exception applies in cases where it is not possible to obtain prior consent for factual reasons, and the processing is permitted by legal regulations.</p>
+<h4>3.2 Legal Basis for Processing Personal Data</h4>
+<p>The legal basis for obtaining consent for the processing of personal data is Art. 6 para. 1 lit. a GDPR.</p>
+<p>When the processing of personal data is necessary for the fulfillment of a contract to which the data subject is a party, Art. 6 para. 1 lit. b GDPR serves as the legal basis. This also applies to processing operations necessary to carry out pre-contractual measures.</p>
+<p>If the processing of personal data is required to fulfill a legal obligation to which our company is subject, Art. 6 para. 1 lit. c GDPR serves as the legal basis.</p>
+<p>In the event that the processing is necessary to protect the vital interests of the data subject or another natural person, Art. 6 para. 1 lit. d GDPR serves as the legal basis.</p>
+<p>If the processing is necessary to safeguard a legitimate interest of our company or a third party and the interests, fundamental rights, and freedoms of the data subject do not override the former interest, Art. 6 para. 1 lit. f GDPR serves as the legal basis for the processing.</p>
+<h4>3.3 Data Deletion and Storage Duration</h4>
+<p>Your personal data will be deleted or blocked as soon as the purpose of storage no longer applies. Further storage may occur if provided for by European or national legislation in EU regulations, laws, or other provisions to which the controller is subject. Blocking or deletion of the data also occurs when a storage period prescribed by the mentioned regulations expires unless there is a necessity for further storage of the data for a contract conclusion or fulfillment.</p>
+<h3>4. Provision of the Website and Creation of Log Files</h3>
+<h4>4.1 Description and Scope of Data Processing</h4>
+<p>Each time our website is accessed, our system automatically collects data and information from the computer system of the requesting device.</p>
+<p>The following data are collected:</p>
+<ul>
+<li>IP address of the requesting computer (anonymized),</li>
+<li>Date and time of access,</li>
+<li>Name and URL of the retrieved file,</li>
+<li>Website from which access occurs (referrer URL),</li>
+<li>Browser used and, if applicable, the operating system of your computer and the name of your access provider.</li>
+</ul>
+<p>The data are also stored in the log files of our system. The data are not stored together with other personal data.</p>
+<h4>4.2 Legal Basis for Data Processing</h4>
+<p>The legal basis for the temporary storage of data and log files is Art. 6 para. 1 lit. f GDPR.</p>
+<h4>4.3 Purpose of Data Processing</h4>
+<p>The temporary storage of the IP address by the system is necessary to deliver the website to your computer. For this, the IP address must be stored for the duration of the session.</p>
+<p>Storage in log files occurs to ensure the functionality of our website. Additionally, the data help optimize the website and ensure the security of our information technology systems. The data are not evaluated for marketing purposes or to draw conclusions about your identity.</p>
+<p>These purposes also constitute our legitimate interest in data processing under Art. 6 para. 1 lit. f GDPR.</p>
+<h4>4.4 Duration of Storage</h4>
+<p>The data will be deleted as soon as they are no longer necessary for achieving the purpose of their collection. For data collected to provide the website, this occurs when the respective session is ended.</p>
+<p>For data stored in log files, this is the case after a maximum of 30 days. Further storage is possible. In this case, the users' IP addresses are deleted or altered so that it is no longer possible to associate the calling client.</p>
+<h4>4.5 Objection and Removal Options</h4>
+<p>The collection of data for the provision of the website and the storage of data in log files is essential for the operation of the website. Consequently, there is no option for users to object.</p>
+<h3>5. Contact Form and Email Contact</h3>
+<h4>5.1 Description and Scope of Data Processing</h4>
+<p>A contact form is available on our website, which can be used for electronic contact. If you take advantage of this opportunity, the contents of the required fields and any optional fields will be transmitted to and stored by us.</p>
+<p>For the processing of the data, your consent is obtained during the submission process, and reference is made to this privacy policy.</p>
+<p>Alternatively, contact can be made via the provided email address. In this case, the personal data transmitted with the email will be stored.</p>
+<p>No data will be disclosed to third parties in this context. The data are used exclusively for processing the conversation.</p>
+<h4>5.2 Legal Basis for Data Processing</h4>
+<p>The legal basis for the processing of data is Art. 6 para. 1 lit. a GDPR if consent is given.</p>
+<p>The legal basis for processing data transmitted during the sending of an email is Art. 6 para. 1 lit. f GDPR. If the email contact aims at concluding a contract, the additional legal basis for processing is Art. 6 para. 1 lit. b GDPR.</p>
+<h4>5.3 Purpose of Data Processing</h4>
+<p>The processing of personal data from the input mask is solely for the purpose of handling the contact. In the case of contact by email, this also constitutes the required legitimate interest in processing the data.</p>
+<h4>5.4 Duration of Storage</h4>
+<p>The data will be deleted as soon as they are no longer necessary for achieving the purpose for which they were collected. For personal data from the input form of the contact form and those sent by email, this is the case when the respective conversation with you has ended. The conversation is considered ended when it can be inferred from the circumstances that the relevant matter has been conclusively resolved.</p>
+<h4>5.5 Objection and Removal Options</h4>
+<p>You have the option to withdraw your consent to the processing of personal data at any time. If you contact us via email, you can object to the storage of your personal data at any time. In such a case, the conversation cannot be continued.</p>
+<p>You can declare your withdrawal of consent and objection to storage via the email address or telephone number provided in the imprint.</p>
+<p>In this case, all personal data stored during the contact will be deleted.</p>
+<p>You can declare the withdrawal of consent and the objection to data storage to us via the email address provided in the legal notice or orally via the specified phone number.</p>
+<p>All personal data stored during contact will be deleted in such cases.</p>
+<h3>6. Plugins and Tools</h3>
+<h4>6.1 Google Maps</h4>
+<p>a) Description and scope of data processing</p>
+<p>We have integrated map material from the Google Maps service into our website. The provider is Google Ireland Limited (‘Google’), Gordon House, Barrow Street, Dublin 4, Ireland. In order to display the content in your browser, your IP address must be transmitted to Google, otherwise Google would not be able to provide you with this integrated content.</p>
+<p>This information is usually transmitted to a Google server in the USA and stored there. The provider of this site has no influence on this data transfer. If Google Maps is activated, Google may use Google Web Fonts for the purpose of standardising the display of fonts. When you call up Google Maps, your browser loads the required web fonts into your browser cache in order to display texts and fonts correctly.</p>
+<p>b) Legal basis for data processing</p>
+<p>The legal basis for the processing of data is Art. 6 para. 1 lit. f GDPR. If a corresponding consent has been requested, the processing is carried out exclusively on the basis of Art. 6 para. 1 lit. a GDPR; the consent can be revoked at any time.</p>
+<p>Data transfer to the USA is based on the standard contractual clauses of the EU Commission. Details can be found here: <a href="https://privacy.google.com/businesses/gdprcontrollerterms/" target="_blank" rel="noopener">https://privacy.google.com/businesses/gdprcontrollerterms/</a> and<a href="https://privacy.google.com/businesses/gdprcontrollerterms/sccs/" target="_blank" rel="noopener"> https://privacy.google.com/businesses/gdprcontrollerterms/sccs/</a>.</p>
+<p>c) Purpose of the data processing</p>
+<p>The purpose and, at the same time, the legitimate interest results from our need for an appealing presentation of our online offer and the easy findability of the places indicated on our homepage. You can see at a glance where our company headquarters are located. The directions will help you find the quickest or shortest route to us.</p>
+<p>d) Duration of storage</p>
+<p>Google stores some data for a fixed period of time. For other data, Google only offers the option of deleting it manually. Google also anonymises information in server logs by deleting part of the IP address after 9 or 18 months.</p>
+<p>You can find more information on the handling of user data in Google's privacy policy: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">https://policies.google.com/privacy?hl=de</a>.</p>
+<h4>6.2. WP Statistics</h4>
+<p>a) Description and scope of data processing</p>
+<p>We use the WP Statistics tool on our website to statistically evaluate visitor access. The provider is Veronalabs, ARENCO Tower, 27th Floor, Dubai Media City, Dubai, Dubai 23816, UAE (<a rel="noopener" target="_blank" href="https://veronalabs.com"><span>https</span><span>://veronalabs</span><span>.com</span></a>).</p>
+<p>We collect, among other things:</p>
+<ul>
+<li>The IP address of the requesting computer (anonymized)</li>
+<li>Website from which access is made (referrer URL)</li>
+<li>Browser used</li>
+<li>Search engine used</li>
+<li>Visitor actions (e.g., clicks and views)</li>
+</ul>
+<p>b) Legal basis for data processing</p>
+<p>The storage of WP Statistics data is based on Art. 6 (1) lit. f GDPR.</p>
+<p>c) Purpose of data processing</p>
+<p>There is a legitimate interest in the anonymized analysis of user behavior to constantly optimize the website for visitors. Under no circumstances do we use the collected data to draw conclusions about your identity.</p>
+<p>d) Type and duration of storage</p>
+<p>The collected data is stored locally on the web server and used until it is no longer necessary for the purposes outlined. The data is not shared with third parties.</p>
+<h4>6.2. Wordfence Security</h4>
+<p>a) Description and scope of data processing</p>
+<p>We use the "Wordfence Security" service operated by Defiant Inc., 800 5th Ave., Suite 4100, Seattle, WA 98104, USA, to secure our website.</p>
+<p>The website uses this service for protection against viruses, malware, and attacks by cybercriminals. For protection against brute force and DDoS attacks or comment spam, IP addresses are stored on the Wordfence servers. IP addresses classified as harmless are placed on a whitelist.</p>
+<p>b) Legal basis for data processing</p>
+<p>Data collection is based on our legitimate interests pursuant to Art. 6 (1) lit. f GDPR.</p>
+<p>c) Purpose of data processing</p>
+<p>Wordfence Security secures our website and protects visitors from viruses and malware. This constitutes a legitimate interest within the meaning of Art. 6 (1) lit. f GDPR.</p>
+<p>Further information on data collection and use by Wordfence Security can be found in Defiant’s privacy policy: <a rel="noopener" target="_blank" href="https://www.wordfence.com/privacy-policy"><span>https</span><span>://www</span><span>.wordfence</span><span>.com</span><span>/privacy</span><span>-policy</span></a>.</p>
+<p>7. Rights of the data subject</p>
+<p>If personal data concerning you is processed, you are a data subject within the meaning of the GDPR, and you have the following rights against the controller:</p>
+<h4>7.1. Right to information</h4>
+<p>You can request confirmation from the controller as to whether personal data concerning you is being processed. If such processing is taking place, you can request information from the controller regarding the following:</p>
+<ol>
+<li>The purposes for which the personal data is being processed;</li>
+<li>The categories of personal data being processed;</li>
+<li>The recipients or categories of recipients to whom your personal data has been or will be disclosed;</li>
+<li>The planned duration of the storage of your personal data, or, if specific information is not possible, the criteria used to determine the storage period;</li>
+<li>The existence of the right to request rectification or erasure of personal data concerning you, the right to restrict processing by the controller, or the right to object to such processing;</li>
+<li>The existence of a right to lodge a complaint with a supervisory authority;</li>
+<li>All available information about the source of the data if the personal data is not collected from the data subject;</li>
+<li>The existence of automated decision-making, including profiling, in accordance with Art. 22 (1) and (4) GDPR and, at least in such cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject.</li>
+</ol>
+<p>You have the right to request information as to whether your personal data is being transferred to a third country or an international organization. In this context, you may request to be informed about the appropriate safeguards pursuant to Art. 46 GDPR in connection with the transfer.</p>
+<h4>7.2. Right to rectification</h4>
+<p>You have the right to rectification and/or completion against the controller, if the personal data processed concerning you is inaccurate or incomplete. The controller must make the correction without undue delay.</p>
+<h4>7.3. Right to restriction of processing</h4>
+<p>You may request the restriction of the processing of your personal data under the following conditions:</p>
+<ol>
+<li>If you contest the accuracy of the personal data concerning you, for a period enabling the controller to verify the accuracy of the personal data;</li>
+<li>The processing is unlawful, and you oppose the deletion of the personal data and instead request the restriction of its use;</li>
+<li>The controller no longer needs the personal data for the purposes of the processing, but you require it for the establishment, exercise, or defense of legal claims;</li>
+<li>If you have objected to the processing pursuant to Art. 21 (1) GDPR, pending verification of whether the legitimate grounds of the controller override yours.</li>
+</ol>
+<p>Where processing of your personal data has been restricted, such data may only be processed, with the exception of storage, with your consent or for the establishment, exercise, or defense of legal claims, for the protection of the rights of another natural or legal person, or for reasons of important public interest of the Union or of a Member State.</p>
+<p>If the processing restriction is lifted, you will be notified by the controller.</p>
+<h4>7.4. Right to erasure</h4>
+<p>a) Obligation to erase</p>
+<p>You can request that the controller immediately erase the personal data concerning you, and the controller is obligated to erase such data without delay, where one of the following grounds applies:</p>
+<ol>
+<li>The personal data concerning you is no longer necessary for the purposes for which it was collected or otherwise processed.</li>
+<li>You withdraw your consent on which the processing is based according to Art. 6 (1) lit. a or Art. 9 (2) lit. a GDPR, and where there is no other legal ground for the processing.</li>
+<li>You object to the processing pursuant to Art. 21 (1) GDPR, and there are no overriding legitimate grounds for the processing, or you object to the processing pursuant to Art. 21 (2) GDPR.</li>
+<li>The personal data concerning you has been unlawfully processed.</li>
+<li>The erasure of the personal data concerning you is necessary for compliance with a legal obligation under Union or Member State law to which the controller is subject.</li>
+<li>The personal data concerning you has been collected in relation to the offer of information society services referred to in Art. 8 (1) GDPR.</li>
+</ol>
+<p>b) Notification to third parties</p>
+<p>Where the controller has made your personal data public and is obliged pursuant to Art. 17 (1) GDPR to erase the data, the controller, taking into account available technology and the cost of implementation, shall take reasonable steps, including technical measures, to inform controllers processing the personal data that you have requested the erasure by such controllers of any links to, or copy or replication of, such personal data.</p>
+<p>c) Exceptions</p>
+<p>The right to erasure does not apply to the extent that processing is necessary for:</p>
+<ol>
+<li>Exercising the right to freedom of expression and information;</li>
+<li>Compliance with a legal obligation that requires processing under Union or Member State law to which the controller is subject, or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller;</li>
+<li>Reasons of public interest in the area of public health in accordance with Art. 9 (2) lit. h and i, and Art. 9 (3) GDPR;</li>
+<li>Archiving purposes in the public interest, scientific or historical research purposes, or statistical purposes in accordance with Art. 89 (1) GDPR, where the right referred to in section a) is likely to render impossible or seriously impair the achievement of the objectives of that processing; or</li>
+<li>The establishment, exercise, or defense of legal claims.</li>
+</ol>
+<h4>7.5. Right to notification</h4>
+<p>If you have asserted the right to rectification, erasure, or restriction of processing against the controller, the controller is obliged to notify all recipients to whom the personal data has been disclosed of such rectification, erasure, or restriction of processing unless this proves impossible or involves disproportionate effort.</p>
+<p>You have the right to be informed about those recipients by the controller.</p>
+<h4>7.6. Right to data portability</h4>
+<p>You have the right to receive the personal data concerning you, which you have provided to the controller, in a structured, commonly used, and machine-readable format. You also have the right to transmit this data to another controller without hindrance from the controller to whom the personal data has been provided, where:</p>
+<ol>
+<li>The processing is based on consent pursuant to Art. 6 (1) lit. a GDPR or Art. 9 (2) lit. a GDPR or on a contract pursuant to Art. 6 (1) lit. b GDPR, and</li>
+<li>The processing is carried out by automated means.</li>
+</ol>
+<p>In exercising this right, you also have the right to have your personal data transmitted directly from one controller to another, where technically feasible. This right must not adversely affect the rights and freedoms of others.</p>
+<p>The right to data portability does not apply to the processing of personal data necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller.</p>
+<h4>7.7. Right to object</h4>
+<p>You have the right to object, on grounds relating to your particular situation, at any time to the processing of personal data concerning you, which is based on Art. 6 (1) lit. e or f GDPR; this also applies to profiling based on these provisions.</p>
+<p>The controller shall no longer process the personal data concerning you unless the controller demonstrates compelling legitimate grounds for the processing that override your interests, rights, and freedoms or for the establishment, exercise, or defense of legal claims.</p>
+<p>Where personal data concerning you is processed for direct marketing purposes, you have the right to object at any time to the processing of your personal data for such marketing; this also applies to profiling, to the extent that it is related to such direct marketing.</p>
+<p>If you object to processing for direct marketing purposes, the personal data concerning you shall no longer be processed for such purposes.</p>
+<p>In connection with the use of information society services, and notwithstanding Directive 2002/58/EC, you may exercise your right to object by automated means using technical specifications.</p>
+<h4>7.8. Right to withdraw consent under data protection law</h4>
+<p>You have the right to withdraw your consent under data protection law at any time. Withdrawal of consent does not affect the lawfulness of the processing based on consent before its withdrawal.</p>
+<h3>7.9. Automated individual decision-making, including profiling</h3>
+<p>You have the right not to be subject to a decision based solely on automated processing — including profiling — that produces legal effects concerning you or similarly significantly affects you. This does not apply if the decision:</p>
+<p>(1) is necessary for entering into or the performance of a contract between you and the controller,</p>
+<p>(2) is authorized by Union or Member State law to which the controller is subject, and these laws provide adequate measures to safeguard your rights and freedoms as well as your legitimate interests, or</p>
+<p>(3) is based on your explicit consent.</p>
+<p>However, such decisions may not be based on special categories of personal data referred to in Article 9(1) of the GDPR, unless Article 9(2)(a) or (g) of the GDPR applies and appropriate measures to safeguard your rights, freedoms, and legitimate interests have been taken.</p>
+<p>In the cases referred to in (1) and (3), the controller shall implement suitable measures to safeguard your rights and freedoms and legitimate interests, at least including the right to obtain human intervention on the part of the controller, to express your point of view, and to contest the decision.</p>
+<h3>7.10. Right to lodge a complaint with a supervisory authority</h3>
+<p>Without prejudice to any other administrative or judicial remedy, you have the right to lodge a complaint with a supervisory authority, particularly in the Member State of your habitual residence, place of work, or place of the alleged infringement, if you believe that the processing of personal data relating to you infringes the GDPR.</p>
+<p>The supervisory authority with which the complaint has been lodged shall inform the complainant of the progress and the outcome of the complaint, including the possibility of a judicial remedy pursuant to Article 78 of the GDPR.</p>
