@@ -2,18 +2,18 @@
 /**
  * Plugin Name:       Berendsohn Digital Service
  * Plugin URI:        https://berendsohn-digitalservice.de
- * Description:       Übergeordnete Funktionen/Anpassungen für Berendsohn-Webseiten (Shortcodes, Login-Maske, Rollen, Design).
- * Version:           3.0.1
+ * Description:       Übergeordnete Funktionen/Anpassungen für Berendsohn-Webseiten (Shortcodes, Login-Maske, Design).
+ * Version:           3.0.2
  * Author:            Berendsohn
  * Author URI:        https://berendsohn-digitalservice.de
  * Text Domain:       berendsohn-digitalservice
  * Domain Path:       /languages
  * Update URI:        https://github.com/freiraum-kd/berendsohn-digitalservice
  */
-//Test Alex vom 
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BDS_VERSION', '3.0.1' );
+define( 'BDS_VERSION', '3.0.2' );
 define( 'BDS_FILE', __FILE__ );
 define( 'BDS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BDS_URL', plugin_dir_url( __FILE__ ) );
