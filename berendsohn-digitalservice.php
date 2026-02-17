@@ -3,7 +3,7 @@
  * Plugin Name:       Berendsohn Digital Service
  * Plugin URI:        https://berendsohn-digitalservice.de
  * Description:       Übergeordnete Funktionen/Anpassungen für Berendsohn-Webseiten (Shortcodes, Login-Maske, Design).
- * Version:           3.0.2
+ * Version:           3.0.3
  * Author:            Berendsohn
  * Author URI:        https://berendsohn-digitalservice.de
  * Text Domain:       berendsohn-digitalservice
@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BDS_VERSION', '3.0.2' );
+define( 'BDS_VERSION', '3.0.3' );
 define( 'BDS_FILE', __FILE__ );
 define( 'BDS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BDS_URL', plugin_dir_url( __FILE__ ) );
