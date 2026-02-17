@@ -8,7 +8,7 @@
  * Author URI:        https://berendsohn-digitalservice.de
  * Text Domain:       berendsohn-digitalservice
  * Domain Path:       /languages
- * Update URI:        https://github.com/freiraum-kd/berendsohn-digitalservice
+ * Update URI:        https://github.com/berendsohn-ag/bag-digitalservice
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
