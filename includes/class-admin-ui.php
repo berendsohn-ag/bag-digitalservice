@@ -20,7 +20,7 @@ class Admin_UI {
         add_action( 'admin_menu', [ __CLASS__, 'maybe_hide_posts_menu' ], 99 );
 
         // Block-Editor global deaktivieren (falls aktiviert)
-        if ( get_option( self::OPT_DISABLE_GUTENBERG, 0 ) ) {
+        if ( (bool) get_option( self::OPT_DISABLE_GUTENBERG ) ) {
             add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
             add_filter( 'use_block_editor_for_post', '__return_false', 100 );
         }
@@ -39,7 +39,7 @@ class Admin_UI {
 
     /** „Beiträge“-Menü (edit.php) für ALLE Nutzer ausblenden, falls aktiviert */
     public static function maybe_hide_posts_menu() {
-        if ( get_option( self::OPT_HIDE_POSTS_MENU, 0 ) ) {
+        if ( (bool) get_option( self::OPT_HIDE_POSTS_MENU ) ) {
             remove_menu_page( 'edit.php' ); // Beiträge
             // Optional auch Untermenüs (Kategorien/Tags) ausblenden:
             // remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=category' );
@@ -49,7 +49,7 @@ class Admin_UI {
 
     /** Sollen Kommentare versteckt/deaktiviert werden? */
     private static function should_hide_comments() : bool {
-        return (bool) get_option( self::OPT_HIDE_POSTS_MENU, 0 ) || (bool) get_option( self::OPT_HIDE_COMMENTS_ALL, 0 );
+        return (bool) get_option( self::OPT_HIDE_POSTS_MENU ) || (bool) get_option( self::OPT_HIDE_COMMENTS_ALL );
     }
 
     /** Alle Hooks/Filter, die Kommentare im kompletten System deaktivieren/verstecken */
@@ -69,16 +69,19 @@ class Admin_UI {
 
         // 3) Aufruf von wp-admin/edit-comments.php blocken/umleiten
         add_action( 'admin_init', function () {
-            $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+            $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
             if ( is_admin() ) {
-                // harte Variante: wenn direkt comments.php aufgerufen wird → Dashboard
-                $pagenow = isset($GLOBALS['pagenow']) ? $GLOBALS['pagenow'] : '';
+                $pagenow = isset( $GLOBALS['pagenow'] ) ? $GLOBALS['pagenow'] : '';
+
+                // harte Variante: wenn direkt edit-comments.php aufgerufen wird → Dashboard
                 if ( $pagenow === 'edit-comments.php' ) {
                     wp_safe_redirect( admin_url() );
                     exit;
                 }
+
                 // weich: falls ein Screen-Objekt vorhanden ist und „comments“ entspricht → umleiten
-                if ( $screen && isset($screen->id) && $screen->id === 'edit-comments' ) {
+                if ( $screen && isset( $screen->id ) && $screen->id === 'edit-comments' ) {
                     wp_safe_redirect( admin_url() );
                     exit;
                 }
@@ -97,7 +100,6 @@ class Admin_UI {
         // 6) Unterstützung „comments“ für alle Post Types entfernen
         add_action( 'admin_init', function () {
             foreach ( get_post_types() as $type ) {
-                // Nur entfernen, wenn der Typ Kommentare unterstützt
                 if ( post_type_supports( $type, 'comments' ) ) {
                     remove_post_type_support( $type, 'comments' );
                     remove_post_type_support( $type, 'trackbacks' );
@@ -130,23 +132,23 @@ class Admin_UI {
     }
 
     public static function register_settings() {
+        // Defaults = 1 (also „checked“), ABER nur wenn Option noch nicht in DB existiert.
         register_setting( 'bds_admin_ui', self::OPT_HIDE_POSTS_MENU, [
-            'type' => 'boolean',
+            'type'              => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 1,
+            'default'           => 1,
         ] );
 
         register_setting( 'bds_admin_ui', self::OPT_DISABLE_GUTENBERG, [
-            'type' => 'boolean',
+            'type'              => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 1,
+            'default'           => 1,
         ] );
 
-        // optionaler, separater Schalter für Kommentare
         register_setting( 'bds_admin_ui', self::OPT_HIDE_COMMENTS_ALL, [
-            'type' => 'boolean',
+            'type'              => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 1,
+            'default'           => 1,
         ] );
 
         add_settings_section(
@@ -162,9 +164,11 @@ class Admin_UI {
             self::OPT_HIDE_POSTS_MENU,
             __( '„Beiträge“-Menü global ausblenden', 'berendsohn-digitalservice' ),
             function () {
-                $v = (bool) get_option( self::OPT_HIDE_POSTS_MENU, 0 );
+                // WICHTIG: kein get_option(..., 0) -> Default aus register_setting greift!
+                $v = (bool) get_option( self::OPT_HIDE_POSTS_MENU );
                 echo '<label><input type="checkbox" name="' . esc_attr( self::OPT_HIDE_POSTS_MENU ) . '" value="1" ' . checked( $v, true, false ) . ' /> ' .
-                     esc_html__( 'Entfernt den Menüpunkt „Beiträge“ für alle Benutzer. (Kommentare werden automatisch ebenfalls ausgeblendet/deaktiviert.)', 'berendsohn-digitalservice' ) . '</label>';
+                     esc_html__( 'Entfernt den Menüpunkt „Beiträge“ für alle Benutzer. (Kommentare werden automatisch ebenfalls ausgeblendet/deaktiviert.)', 'berendsohn-digitalservice' ) .
+                     '</label>';
             },
             'bds-admin-ui',
             'bds_admin_ui_section'
@@ -174,9 +178,10 @@ class Admin_UI {
             self::OPT_HIDE_COMMENTS_ALL,
             __( 'Kommentare global deaktivieren (optional, unabhängig)', 'berendsohn-digitalservice' ),
             function () {
-                $v = (bool) get_option( self::OPT_HIDE_COMMENTS_ALL, 0 );
+                $v = (bool) get_option( self::OPT_HIDE_COMMENTS_ALL );
                 echo '<label><input type="checkbox" name="' . esc_attr( self::OPT_HIDE_COMMENTS_ALL ) . '" value="1" ' . checked( $v, true, false ) . ' /> ' .
-                     esc_html__( 'Versteckt/Deaktiviert Kommentare und Kommentar-Menüs systemweit – unabhängig von „Beiträge ausblenden“.', 'berendsohn-digitalservice' ) . '</label>';
+                     esc_html__( 'Versteckt/Deaktiviert Kommentare und Kommentar-Menüs systemweit – unabhängig von „Beiträge ausblenden“.', 'berendsohn-digitalservice' ) .
+                     '</label>';
             },
             'bds-admin-ui',
             'bds_admin_ui_section'
@@ -186,9 +191,10 @@ class Admin_UI {
             self::OPT_DISABLE_GUTENBERG,
             __( 'Block-Editor (Gutenberg) global deaktivieren', 'berendsohn-digitalservice' ),
             function () {
-                $v = (bool) get_option( self::OPT_DISABLE_GUTENBERG, 0 );
+                $v = (bool) get_option( self::OPT_DISABLE_GUTENBERG );
                 echo '<label><input type="checkbox" name="' . esc_attr( self::OPT_DISABLE_GUTENBERG ) . '" value="1" ' . checked( $v, true, false ) . ' /> ' .
-                     esc_html__( 'Erzwingt den klassischen Editor für alle Beitragstypen und alle Benutzer.', 'berendsohn-digitalservice' ) . '</label>';
+                     esc_html__( 'Erzwingt den klassischen Editor für alle Beitragstypen und alle Benutzer.', 'berendsohn-digitalservice' ) .
+                     '</label>';
             },
             'bds-admin-ui',
             'bds_admin_ui_section'
@@ -200,9 +206,11 @@ class Admin_UI {
         <div class="wrap">
             <h1><?php echo esc_html__( 'BDS Admin-Oberfläche', 'berendsohn-digitalservice' ); ?></h1>
             <form method="post" action="options.php">
-                <?php settings_fields( 'bds_admin_ui' );
-                      do_settings_sections( 'bds-admin-ui' );
-                      submit_button(); ?>
+                <?php
+                    settings_fields( 'bds_admin_ui' );
+                    do_settings_sections( 'bds-admin-ui' );
+                    submit_button();
+                ?>
             </form>
         </div>
     <?php }
