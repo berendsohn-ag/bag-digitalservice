@@ -133,20 +133,20 @@ class Admin_UI {
         register_setting( 'bds_admin_ui', self::OPT_HIDE_POSTS_MENU, [
             'type' => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 0,
+            'default' => 1,
         ] );
 
         register_setting( 'bds_admin_ui', self::OPT_DISABLE_GUTENBERG, [
             'type' => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 0,
+            'default' => 1,
         ] );
 
         // optionaler, separater Schalter für Kommentare
         register_setting( 'bds_admin_ui', self::OPT_HIDE_COMMENTS_ALL, [
             'type' => 'boolean',
             'sanitize_callback' => [ __CLASS__, 'sanitize_checkbox' ],
-            'default' => 0,
+            'default' => 1,
         ] );
 
         add_settings_section(
