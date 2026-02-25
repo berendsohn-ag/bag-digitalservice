@@ -19,7 +19,7 @@
       );
   }
 
-  // ✅ Stabiler Picker: textbox + datalist (keine listbox, kein win.getEl/toJSON, kein reopen)
+  // ---------- Picker (textbox + datalist) ----------
   function openPicker(editor) {
     fetchShortcodes().then(list => {
       if (!list.length) {
@@ -49,9 +49,6 @@
               const v = readFromActiveDialog();
               if (!v) return;
 
-              // Wenn du NUR bekannte Shortcodes erlauben willst, aktiviere die Zeile:
-              // if (list.indexOf(v) === -1) return;
-
               editor.insertContent("[" + v + "]");
               editor.windowManager.close();
             }
@@ -60,7 +57,7 @@
         ]
       });
 
-      // datalist in aktuellstes TinyMCE-Modal hängen (ohne win.getEl)
+      // datalist ans sichtbare Modal hängen (Customizer-sicher)
       setTimeout(function () {
         const $ = window.jQuery;
 
@@ -68,34 +65,29 @@
         const $input = $win.find("input.mce-textbox").first();
         if (!$input.length) return;
 
+        // datalist einmalig hinzufügen
         if ($win.find("datalist#" + dlId).length === 0) {
           const $dl = $('<datalist id="' + dlId + '"></datalist>');
-          list.forEach(sc => {
-            $dl.append($("<option/>").attr("value", sc));
-          });
+          list.forEach(sc => $dl.append($("<option/>").attr("value", sc)));
           $win.append($dl);
         }
 
         $input.attr("list", dlId);
 
-        // Enter = einfügen
+        // Enter = Einfügen
         $input.off("keydown.bds").on("keydown.bds", function (ev) {
           if (ev.key === "Enter") {
             ev.preventDefault();
             const v = ($input.val() || "").trim();
             if (!v) return;
 
-            // Optional: nur bekannte Shortcodes erlauben
-            // if (list.indexOf(v) === -1) return;
-
             editor.insertContent("[" + v + "]");
             editor.windowManager.close();
           }
         });
 
-        // Fokus
         try { $input.get(0).focus(); } catch (e) {}
-      }, 60);
+      }, 80);
 
       function readFromActiveDialog() {
         const $ = window.jQuery;
@@ -106,9 +98,10 @@
     });
   }
 
-  // 1) TinyMCE Button (falls erlaubt)
+  // ---------- Button: TinyMCE API ----------
   function tryAddTinyMCEButton(editor) {
     try {
+      if (!editor || !editor.addButton) return;
       if (editor.settings && editor.settings._bdsAdded) return;
       editor.settings._bdsAdded = true;
 
@@ -121,11 +114,12 @@
     } catch (e) {}
   }
 
-  // 2) Toolbar DOM-Injection (YOOtheme-sicher)
+  // ---------- Button: DOM Injection (YOOtheme-sicher) ----------
   function injectDomButton(editor) {
     const $ = window.jQuery;
+    if (!$) return;
 
-    const iframeId = editor.iframeElement ? editor.iframeElement.id : null;
+    const iframeId = editor && editor.iframeElement ? editor.iframeElement.id : null;
     if (!iframeId) return;
 
     const $iframe = $("#" + iframeId);
@@ -162,32 +156,69 @@
 
   function onEditorReady(editor) {
     tryAddTinyMCEButton(editor);
+
+    // YOOtheme rendert Toolbars gern später -> mehrfach versuchen
     setTimeout(function () { injectDomButton(editor); }, 300);
     setTimeout(function () { injectDomButton(editor); }, 1200);
+    setTimeout(function () { injectDomButton(editor); }, 2500);
   }
 
-  function hookEditors() {
-    if (typeof tinymce === "undefined") return;
+  // ---------- Robust Hooking: Polling + AddEditor ----------
+  function hookEditorsOnce() {
+    if (typeof tinymce === "undefined" || !tinymce) return false;
+
+    let found = false;
 
     (tinymce.editors || []).forEach(function (ed) {
       if (!ed) return;
-      ed.on("init", function () { onEditorReady(ed); });
+      found = true;
+
+      // init hook
+      if (!ed._bdsInitHooked) {
+        ed._bdsInitHooked = true;
+        ed.on("init", function () { onEditorReady(ed); });
+      }
+
+      // falls schon init
       if (ed.initialized) onEditorReady(ed);
     });
 
-    tinymce.on("AddEditor", function (e) {
-      if (e && e.editor) {
-        e.editor.on("init", function () { onEditorReady(e.editor); });
-      }
-    });
+    // AddEditor kann im Customizer auch mal nicht feuern, aber wenn doch: nutzen
+    if (!tinymce._bdsAddEditorHooked && tinymce.on) {
+      tinymce._bdsAddEditorHooked = true;
+      tinymce.on("AddEditor", function (e) {
+        if (e && e.editor) {
+          e.editor.on("init", function () { onEditorReady(e.editor); });
+          // falls schon init
+          if (e.editor.initialized) onEditorReady(e.editor);
+        }
+      });
+    }
+
+    return found;
   }
 
   function boot() {
     if (!window.jQuery || typeof tinymce === "undefined") {
-      setTimeout(boot, 250);
+      setTimeout(boot, 300);
       return;
     }
-    hookEditors();
+
+    // Polling: im Customizer kommen Editor/Toolbar oft verzögert
+    let tries = 0;
+    (function poll() {
+      tries++;
+      const found = hookEditorsOnce();
+
+      // solange versuchen, bis mind. 1 Editor gefunden wurde, dann noch ein paar Runden
+      if (!found && tries < 40) {
+        setTimeout(poll, 300);
+        return;
+      }
+      if (tries < 60) {
+        setTimeout(poll, 600);
+      }
+    })();
   }
 
   boot();
