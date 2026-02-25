@@ -12,130 +12,120 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
- // oben im IIFE (einmalig), damit wir nur EINEN Dialog haben:
-let _bdsPickerTimer = null;
-let _bdsPickerToken = 0;
+  // --- NEU: state für Suche (stabiler reopen) ---
+  let _bdsSearchTimer = null;
+  let _bdsLastQuery = "";
+  let _bdsLastSelected = "";
 
-function openPicker(editor, state) {
-  state = state || { q: "", selected: "" };
-  const myToken = ++_bdsPickerToken;
-
-  fetchShortcodes().then(list => {
-    if (myToken !== _bdsPickerToken) return;
-
-    if (!list.length) {
-      editor.windowManager && editor.windowManager.alert
-        ? editor.windowManager.alert("Keine Shortcodes gefunden.")
-        : alert("Keine Shortcodes gefunden.");
-      return;
-    }
-
-    const q = (state.q || "").toLowerCase().trim();
-    const filtered = !q ? list : list.filter(sc => (sc || "").toLowerCase().includes(q));
-
-    const items = (filtered.length ? filtered : ["— keine Treffer —"]).map(sc => {
-      const empty = sc === "— keine Treffer —";
-      return { text: empty ? sc : "[" + sc + "]", value: empty ? "" : sc };
-    });
-
-    const initialSelected =
-      state.selected && filtered.includes(state.selected)
-        ? state.selected
-        : (items[0] ? items[0].value : "");
-
-    // ✅ WICHTIG: var (nicht const), damit onPostRender kein TDZ-Fehler wirft
-    var win;
-
-    win = editor.windowManager.open({
-      title: "Shortcode einfügen",
-      body: [
-        {
-          type: "textbox",
-          name: "bds_sc_search",
-          label: "Suchen",
-          value: state.q || ""
-        },
-        {
-          type: "listbox",
-          name: "shortcode",
-          label: "Verfügbar",
-          values: items,
-          value: initialSelected
-        }
-      ],
-      buttons: [
-        {
-          text: "Einfügen",
-          subtype: "primary",
-          onclick: function () {
-            // ✅ Wert IMMER aus Dialog-State holen (nicht aus JS-Variable)
-            const data = win.toJSON ? win.toJSON() : {};
-            const v = data.shortcode || "";
-            if (!v) return;
-
-            editor.insertContent("[" + v + "]");
-            win.close();
-          }
-        },
-        { text: "Abbrechen", onclick: "close" }
-      ],
-      onPostRender: function () {
-        const $ = window.jQuery;
-        const root = win.getEl ? win.getEl() : null;
-        if (!root) return;
-
-        const $root = $(root);
-        const $search = $root.find("input.mce-textbox").first();
-        if (!$search.length) return;
-
-        // Cursor ans Ende
-        setTimeout(function () {
-          try {
-            const el = $search.get(0);
-            el.focus();
-            const v = el.value || "";
-            el.setSelectionRange(v.length, v.length);
-          } catch (e) {}
-        }, 0);
-
-        // ✅ Debounced reopen – aber sauber, ohne Modal-Chaos
-        $search.on("input", function () {
-          clearTimeout(_bdsPickerTimer);
-          const nextQ = $search.val();
-
-          _bdsPickerTimer = setTimeout(function () {
-            // aktuellen selected aus dem Dialog ziehen
-            const data = win.toJSON ? win.toJSON() : {};
-            const curSel = data.shortcode || initialSelected;
-
-            // Token erhöhen -> alte Requests/Handler verlieren Gültigkeit
-            _bdsPickerToken++;
-
-            // wirklich alle TinyMCE-Dialogs schließen (stabiler als win.close in manchen Setups)
-            try { editor.windowManager.close(); } catch (e) {}
-
-            // kleiner Delay, damit WP/YOOtheme Modal-DOM sauber aufräumt
-            setTimeout(function () {
-              openPicker(editor, { q: nextQ, selected: curSel });
-            }, 160);
-          }, 140);
-        });
-
-        // Enter im Suchfeld = einfügen
-        $search.on("keydown", function (ev) {
-          if (ev.key === "Enter") {
-            ev.preventDefault();
-            const data = win.toJSON ? win.toJSON() : {};
-            const v = data.shortcode || "";
-            if (!v) return;
-            editor.insertContent("[" + v + "]");
-            win.close();
-          }
-        });
+  function openPicker(editor) {
+    fetchShortcodes().then(list => {
+      if (!list.length) {
+        editor.windowManager && editor.windowManager.alert
+          ? editor.windowManager.alert("Keine Shortcodes gefunden.")
+          : alert("Keine Shortcodes gefunden.");
+        return;
       }
+
+      // Filter anwenden
+      const q = (_bdsLastQuery || "").toLowerCase().trim();
+      const filtered = !q ? list : list.filter(sc => (sc || "").toLowerCase().includes(q));
+
+      const items = (filtered.length ? filtered : ["— keine Treffer —"]).map(sc => {
+        const empty = sc === "— keine Treffer —";
+        return { text: empty ? sc : "[" + sc + "]", value: empty ? "" : sc };
+      });
+
+      // selected wie vorher, aber Auswahl merken / wiederherstellen
+      let selected =
+        (_bdsLastSelected && filtered.includes(_bdsLastSelected))
+          ? _bdsLastSelected
+          : (items[0] ? items[0].value : "");
+
+      // ✅ WICHTIG: var win, damit Callbacks nicht kaputt gehen
+      var win = editor.windowManager.open({
+        title: "Shortcode einfügen",
+        body: [
+          // ✅ Search-Input als TinyMCE textbox (wird bei dir gerendert)
+          {
+            type: "textbox",
+            name: "bds_sc_search",
+            label: "Suchen",
+            value: _bdsLastQuery || ""
+          },
+          // ✅ dein funktionierendes listbox bleibt
+          {
+            type: "listbox",
+            name: "shortcode",
+            label: "Verfügbar",
+            values: items,
+            value: selected,
+            onselect: function () {
+              selected = this.value();
+              _bdsLastSelected = selected; // merken
+            }
+          }
+        ],
+        buttons: [
+          {
+            text: "Einfügen",
+            subtype: "primary",
+            onclick: function () {
+              if (!selected) return;
+              editor.insertContent("[" + selected + "]");
+              win.close();
+            }
+          },
+          { text: "Abbrechen", onclick: "close" }
+        ],
+        onPostRender: function () {
+          // Search input finden und reopen “sauber” triggern
+          const $ = window.jQuery;
+          const root = win.getEl ? win.getEl() : null;
+          if (!root) return;
+
+          const $root = $(root);
+          const $search = $root.find("input.mce-textbox").first();
+          if (!$search.length) return;
+
+          // Fokus + Cursor ans Ende
+          setTimeout(function () {
+            try {
+              const el = $search.get(0);
+              el.focus();
+              const v = el.value || "";
+              el.setSelectionRange(v.length, v.length);
+            } catch (e) {}
+          }, 0);
+
+          // Live tippen -> debounce -> sauber schließen -> neu öffnen
+          $search.off(".bds").on("input.bds", function () {
+            clearTimeout(_bdsSearchTimer);
+            const nextQ = $search.val();
+            _bdsLastQuery = nextQ;
+
+            _bdsSearchTimer = setTimeout(function () {
+              // Dialog schließen und erst dann neu öffnen
+              try { win.close(); } catch (e) {}
+
+              setTimeout(function () {
+                openPicker(editor);
+              }, 120);
+            }, 160);
+          });
+
+          // Enter im Suchfeld = einfügen
+          $search.off("keydown.bds").on("keydown.bds", function (ev) {
+            if (ev.key === "Enter") {
+              ev.preventDefault();
+              if (!selected) return;
+              editor.insertContent("[" + selected + "]");
+              win.close();
+            }
+          });
+        }
+      });
     });
-  });
-}
+  }
 
   // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
@@ -143,16 +133,12 @@ function openPicker(editor, state) {
       if (editor.settings && editor.settings._bdsAdded) return;
       editor.settings._bdsAdded = true;
 
-      // Manche Setups erlauben addButton nicht mehr -> try/catch
       editor.addButton("bds_shortcode_picker", {
         text: "BDS-Shortcodes",
         icon: false,
         tooltip: "BDS-Shortcodes",
         onclick: function () { openPicker(editor); }
       });
-
-      // Wenn Toolbar vom Theme fix ist, erscheint der Button evtl. trotzdem nicht
-      // Deshalb zusätzlich DOM-Injection (siehe unten)
     } catch (e) {}
   }
 
@@ -160,8 +146,6 @@ function openPicker(editor, state) {
   function injectDomButton(editor) {
     const $ = window.jQuery;
 
-    // TinyMCE Container hat id wie mceu_21, Toolbar-Gruppe wie .mce-toolbar-grp
-    // Wir suchen über den iframe id -> parent -> nächster .mce-tinymce container
     const iframeId = editor.iframeElement ? editor.iframeElement.id : null;
     if (!iframeId) return;
 
@@ -171,14 +155,12 @@ function openPicker(editor, state) {
     const $tinymceWrap = $iframe.closest(".mce-tinymce");
     if (!$tinymceWrap.length) return;
 
-    // Nur 1x
     if ($tinymceWrap.data("bdsDomButton")) return;
     $tinymceWrap.data("bdsDomButton", true);
 
     const $toolbar = $tinymceWrap.find(".mce-toolbar-grp .mce-flow-layout").first();
     if (!$toolbar.length) return;
 
-    // Button HTML im TinyMCE-Look
     const $btn = $(
       '<div class="mce-container mce-flow-layout-item mce-btn-group" role="group">' +
         '<div class="mce-container-body">' +
@@ -201,8 +183,6 @@ function openPicker(editor, state) {
 
   function onEditorReady(editor) {
     tryAddTinyMCEButton(editor);
-
-    // DOM-Injection etwas verzögert, weil YOOtheme Toolbar manchmal nachträglich rendert
     setTimeout(function () { injectDomButton(editor); }, 300);
     setTimeout(function () { injectDomButton(editor); }, 1200);
   }
@@ -210,14 +190,12 @@ function openPicker(editor, state) {
   function hookEditors() {
     if (typeof tinymce === "undefined") return;
 
-    // bestehende
     (tinymce.editors || []).forEach(function (ed) {
       if (!ed) return;
       ed.on("init", function () { onEditorReady(ed); });
       if (ed.initialized) onEditorReady(ed);
     });
 
-    // neue (Customizer/Builder)
     tinymce.on("AddEditor", function (e) {
       if (e && e.editor) {
         e.editor.on("init", function () { onEditorReady(e.editor); });
