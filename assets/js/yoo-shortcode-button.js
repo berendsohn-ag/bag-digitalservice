@@ -1,9 +1,7 @@
 (function () {
   function ajaxCfg() {
     return {
-      url: (window.BDSShortcodes && BDSShortcodes.ajaxUrl)
-        ? BDSShortcodes.ajaxUrl
-        : (window.ajaxurl || "/wp-admin/admin-ajax.php"),
+      url: (window.BDSShortcodes && BDSShortcodes.ajaxUrl) ? BDSShortcodes.ajaxUrl : (window.ajaxurl || "/wp-admin/admin-ajax.php"),
       nonce: (window.BDSShortcodes && BDSShortcodes.nonce) ? BDSShortcodes.nonce : ""
     };
   }
@@ -14,117 +12,93 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  function openPicker(editor) {
-    fetchShortcodes().then(list => {
-      if (!list.length) {
-        editor.windowManager && editor.windowManager.alert
-          ? editor.windowManager.alert("Keine Shortcodes gefunden.")
-          : alert("Keine Shortcodes gefunden.");
-        return;
-      }
+  // --- NEU: state für Suche (stabiler reopen) ---
+  let _bdsSearchTimer = null;
+  let _bdsLastQuery = "";
+  let _bdsLastSelected = "";
 
-      const $ = window.jQuery;
+ function openPicker(editor) {
+  fetchShortcodes().then(list => {
+    if (!list.length) {
+      editor.windowManager && editor.windowManager.alert
+        ? editor.windowManager.alert("Keine Shortcodes gefunden.")
+        : alert("Keine Shortcodes gefunden.");
+      return;
+    }
 
-      const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
-      let selected = items[0].value;
+    // ID für datalist
+    const dlId = "bds_sc_dl_" + Math.floor(Math.random() * 1e9);
 
-      // datalist id
-      const dlId = "bds_sc_dl_" + Math.floor(Math.random() * 1e9);
-
-      // Dialog öffnen: textbox + listbox
-      editor.windowManager.open({
-        title: "Shortcode einfügen",
-        body: [
-          {
-            type: "textbox",
-            name: "bds_sc_search",
-            label: "Suchen",
-            value: ""
-          },
-          {
-            type: "listbox",
-            name: "shortcode",
-            label: "Verfügbar",
-            values: items,
-            onselect: function () { selected = this.value(); }
-          }
-        ],
-        buttons: [
-          {
-            text: "Einfügen",
-            subtype: "primary",
-            onclick: function () {
-              // 1) wenn Suchfeld befüllt: das nehmen, sonst listbox-selected
-              const v = readSearchValue() || selected;
-              if (!v) return;
-
-              editor.insertContent("[" + v + "]");
-              editor.windowManager.close();
-            }
-          },
-          { text: "Abbrechen", onclick: "close" }
-        ]
-      });
-
-      // Nach Render: datalist an textbox hängen (ohne win/getEl)
-      setTimeout(function () {
-        const $win = $(".mce-window:visible").last();
-        const $input = $win.find("input.mce-textbox").first();
-        if (!$input.length) return;
-
-        // datalist einfügen (einmalig)
-        if ($win.find("datalist#" + dlId).length === 0) {
-          const $dl = $('<datalist id="' + dlId + '"></datalist>');
-          list.forEach(sc => $dl.append($("<option/>").attr("value", sc)));
-          $win.append($dl);
+    // Dialog öffnen (nur textbox -> stabil)
+    editor.windowManager.open({
+      title: "Shortcode einfügen",
+      body: [
+        {
+          type: "textbox",
+          name: "bds_sc",
+          label: "Suchen",
+          value: "",
         }
-
-        $input.attr("list", dlId);
-
-        // live: wenn exakte Übereinstimmung, selected synchronisieren
-        $input.off("input.bds").on("input.bds", function () {
-          const v = ($input.val() || "").trim();
-          if (!v) return;
-
-          // wenn v exakt in list ist -> selected setzen
-          if (list.indexOf(v) !== -1) {
-            selected = v;
-
-            // versuchen, listbox optisch mitzuziehen (optional)
-            // manchmal ist es kein echtes <select>, daher try/catch
-            try {
-              const $sel = $win.find("select").last();
-              if ($sel.length) $sel.val(v).trigger("change");
-            } catch (e) {}
-          }
-        });
-
-        // Enter = einfügen
-        $input.off("keydown.bds").on("keydown.bds", function (ev) {
-          if (ev.key === "Enter") {
-            ev.preventDefault();
-            const v = readSearchValue() || selected;
+      ],
+      buttons: [
+        {
+          text: "Einfügen",
+          subtype: "primary",
+          onclick: function () {
+            // Wert direkt aus dem Input holen (ohne win/getEl/toJSON)
+            const v = readFromActiveDialog();
             if (!v) return;
-
             editor.insertContent("[" + v + "]");
             editor.windowManager.close();
           }
-        });
-
-        // Fokus
-        try { $input.get(0).focus(); } catch (e) {}
-      }, 80);
-
-      function readSearchValue() {
-        const $win = $(".mce-window:visible").last();
-        const $input = $win.find("input.mce-textbox").first();
-        const v = $input.length ? ($input.val() || "").trim() : "";
-        // Wenn du NUR erlaubte Shortcodes zulassen willst:
-        // if (v && list.indexOf(v) === -1) return "";
-        return v;
-      }
+        },
+        { text: "Abbrechen", onclick: "close" }
+      ]
     });
-  }
+
+    // Nach Render: datalist an das echte input hängen (ohne win.getEl)
+    setTimeout(function () {
+      const $ = window.jQuery;
+
+      // aktuellstes TinyMCE-Modal
+      const $win = $(".mce-window:visible").last();
+      const $input = $win.find("input.mce-textbox").first();
+      if (!$input.length) return;
+
+      // datalist einfügen, wenn noch nicht da
+      if ($win.find("datalist#" + dlId).length === 0) {
+        const $dl = $('<datalist id="' + dlId + '"></datalist>');
+        list.forEach(sc => {
+          $dl.append($("<option/>").attr("value", sc));
+        });
+        $win.append($dl);
+      }
+
+      $input.attr("list", dlId);
+
+      // Enter = einfügen
+      $input.off("keydown.bds").on("keydown.bds", function (ev) {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          const v = ($input.val() || "").trim();
+          if (!v) return;
+          editor.insertContent("[" + v + "]");
+          editor.windowManager.close();
+        }
+      });
+
+      // Fokus
+      try { $input.get(0).focus(); } catch (e) {}
+    }, 50);
+
+    function readFromActiveDialog() {
+      const $ = window.jQuery;
+      const $win = $(".mce-window:visible").last();
+      const $input = $win.find("input.mce-textbox").first();
+      return $input.length ? ($input.val() || "").trim() : "";
+    }
+  });
+}
 
   // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
