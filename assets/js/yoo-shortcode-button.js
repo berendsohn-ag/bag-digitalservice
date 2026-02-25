@@ -12,8 +12,17 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
- function openPicker(editor) {
+ // oben im IIFE (einmalig), damit wir nur EINEN Dialog haben:
+let _bdsPickerTimer = null;
+let _bdsPickerToken = 0;
+
+function openPicker(editor, state) {
+  state = state || { q: "", selected: "" };
+  const myToken = ++_bdsPickerToken;
+
   fetchShortcodes().then(list => {
+    if (myToken !== _bdsPickerToken) return;
+
     if (!list.length) {
       editor.windowManager && editor.windowManager.alert
         ? editor.windowManager.alert("Keine Shortcodes gefunden.")
@@ -21,26 +30,37 @@
       return;
     }
 
-    // wir speichern Auswahl hier
-    let selected = list[0] || "";
+    const q = (state.q || "").toLowerCase().trim();
+    const filtered = !q ? list : list.filter(sc => (sc || "").toLowerCase().includes(q));
 
-    // eindeutige ID für datalist
-    const dlId = "bds_sc_datalist_" + Math.floor(Math.random() * 1e9);
+    const items = (filtered.length ? filtered : ["— keine Treffer —"]).map(sc => {
+      const empty = sc === "— keine Treffer —";
+      return { text: empty ? sc : "[" + sc + "]", value: empty ? "" : sc };
+    });
 
-    const win = editor.windowManager.open({
+    const initialSelected =
+      state.selected && filtered.includes(state.selected)
+        ? state.selected
+        : (items[0] ? items[0].value : "");
+
+    // ✅ WICHTIG: var (nicht const), damit onPostRender kein TDZ-Fehler wirft
+    var win;
+
+    win = editor.windowManager.open({
       title: "Shortcode einfügen",
       body: [
         {
-          type: "container",
-          html:
-            '<label style="display:block;font-size:12px;margin:0 0 4px;">Shortcode suchen</label>' +
-            '<input class="bds-sc-combo" list="' + dlId + '" ' +
-                   'style="width:100%;box-sizing:border-box;padding:6px 8px;" ' +
-                   'placeholder="Tippe, um zu suchen…">' +
-            '<datalist id="' + dlId + '"></datalist>' +
-            '<div style="font-size:11px;opacity:.7;margin-top:6px;">' +
-              'Tipp: Enter = einfügen' +
-            '</div>'
+          type: "textbox",
+          name: "bds_sc_search",
+          label: "Suchen",
+          value: state.q || ""
+        },
+        {
+          type: "listbox",
+          name: "shortcode",
+          label: "Verfügbar",
+          values: items,
+          value: initialSelected
         }
       ],
       buttons: [
@@ -48,8 +68,11 @@
           text: "Einfügen",
           subtype: "primary",
           onclick: function () {
-            const v = readValue();
+            // ✅ Wert IMMER aus Dialog-State holen (nicht aus JS-Variable)
+            const data = win.toJSON ? win.toJSON() : {};
+            const v = data.shortcode || "";
             if (!v) return;
+
             editor.insertContent("[" + v + "]");
             win.close();
           }
@@ -60,51 +83,57 @@
         const $ = window.jQuery;
         const root = win.getEl ? win.getEl() : null;
         if (!root) return;
+
         const $root = $(root);
+        const $search = $root.find("input.mce-textbox").first();
+        if (!$search.length) return;
 
-        const $input = $root.find("input.bds-sc-combo").first();
-        const $datalist = $root.find("datalist#" + dlId).first();
-        if (!$input.length || !$datalist.length) return;
+        // Cursor ans Ende
+        setTimeout(function () {
+          try {
+            const el = $search.get(0);
+            el.focus();
+            const v = el.value || "";
+            el.setSelectionRange(v.length, v.length);
+          } catch (e) {}
+        }, 0);
 
-        // datalist füllen
-        list.forEach(sc => {
-          const opt = document.createElement("option");
-          opt.value = sc;
-          $datalist.get(0).appendChild(opt);
+        // ✅ Debounced reopen – aber sauber, ohne Modal-Chaos
+        $search.on("input", function () {
+          clearTimeout(_bdsPickerTimer);
+          const nextQ = $search.val();
+
+          _bdsPickerTimer = setTimeout(function () {
+            // aktuellen selected aus dem Dialog ziehen
+            const data = win.toJSON ? win.toJSON() : {};
+            const curSel = data.shortcode || initialSelected;
+
+            // Token erhöhen -> alte Requests/Handler verlieren Gültigkeit
+            _bdsPickerToken++;
+
+            // wirklich alle TinyMCE-Dialogs schließen (stabiler als win.close in manchen Setups)
+            try { editor.windowManager.close(); } catch (e) {}
+
+            // kleiner Delay, damit WP/YOOtheme Modal-DOM sauber aufräumt
+            setTimeout(function () {
+              openPicker(editor, { q: nextQ, selected: curSel });
+            }, 160);
+          }, 140);
         });
 
-        // default
-        $input.val(selected);
-
-        // live: selected aktualisieren
-        $input.on("input", function () {
-          selected = $input.val();
-        });
-
-        // Enter = einfügen
-        $input.on("keydown", function (ev) {
+        // Enter im Suchfeld = einfügen
+        $search.on("keydown", function (ev) {
           if (ev.key === "Enter") {
             ev.preventDefault();
-            const v = readValue();
+            const data = win.toJSON ? win.toJSON() : {};
+            const v = data.shortcode || "";
             if (!v) return;
             editor.insertContent("[" + v + "]");
             win.close();
           }
         });
-
-        // Fokus
-        setTimeout(function () { try { $input.get(0).focus(); } catch(e) {} }, 0);
       }
     });
-
-    function readValue() {
-      const v = (selected || "").trim();
-      // optional: nur erlauben, wenn in Liste vorhanden
-      if (!v) return "";
-      // wenn du NUR bekannte Shortcodes erlauben willst, entkommentieren:
-      // if (list.indexOf(v) === -1) return "";
-      return v;
-    }
   });
 }
 
