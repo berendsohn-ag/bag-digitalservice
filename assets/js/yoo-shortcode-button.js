@@ -1,5 +1,4 @@
 (function () {
-
   function ajaxCfg() {
     return {
       url: (window.BDSShortcodes && BDSShortcodes.ajaxUrl) ? BDSShortcodes.ajaxUrl : (window.ajaxurl || "/wp-admin/admin-ajax.php"),
@@ -13,144 +12,123 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  function normalize(s) {
-    return (s || "").toString().toLowerCase().trim();
-  }
-
   function openPicker(editor) {
-    fetchShortcodes().then(list => {
-      if (!list.length) {
-        editor.windowManager && editor.windowManager.alert
-          ? editor.windowManager.alert("Keine Shortcodes gefunden.")
-          : alert("Keine Shortcodes gefunden.");
-        return;
-      }
+  fetchShortcodes().then(list => {
+    if (!list.length) {
+      editor.windowManager && editor.windowManager.alert
+        ? editor.windowManager.alert("Keine Shortcodes gefunden.")
+        : alert("Keine Shortcodes gefunden.");
+      return;
+    }
 
-      let selected = list[0] || "";
-      let query = "";
+    const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
+    let selected = items[0].value;
 
-      const html =
-        '<div class="bds-sc-picker">' +
-          '<div style="margin-bottom:10px;">' +
-            '<label style="display:block;font-size:12px;margin:0 0 4px;">Suchen</label>' +
-            '<input type="text" class="bds-sc-search" placeholder="Tippe zum Filtern…" ' +
-                   'style="width:100%;box-sizing:border-box;padding:6px 8px;" />' +
-          '</div>' +
-          '<div>' +
-            '<label style="display:block;font-size:12px;margin:0 0 4px;">Verfügbar</label>' +
-            '<select class="bds-sc-select" size="10" ' +
-                    'style="width:100%;box-sizing:border-box;padding:6px 8px;"></select>' +
-          '</div>' +
-        '</div>';
-
-      const win = editor.windowManager.open({
-        title: "Shortcode einfügen",
-        body: [
-          // WICHTIG: htmlpanel statt container
-          { type: "htmlpanel", html: html }
-        ],
-        buttons: [
-          {
-            text: "Einfügen",
-            subtype: "primary",
-            onclick: function () {
-              if (!selected) return;
-              editor.insertContent("[" + selected + "]");
-              win.close();
-            }
-          },
-          { text: "Abbrechen", onclick: "close" }
-        ],
-        onPostRender: function () {
-          attachHandlers();
+    const win = editor.windowManager.open({
+      title: "Shortcode einfügen",
+      body: [
+        // 1) Search-Input (als HTML oberhalb der Listbox)
+        {
+          type: "container",
+          html:
+            '<div class="bds-sc-search-wrap" style="margin-bottom:8px;">' +
+              '<label style="display:block;font-size:12px;margin-bottom:4px;">Suchen</label>' +
+              '<input type="text" class="bds-sc-search" placeholder="Tippe zum Filtern…" ' +
+                     'style="width:100%;box-sizing:border-box;padding:6px 8px;" />' +
+            '</div>'
+        },
+        // 2) Deine Listbox bleibt gleich
+        {
+          type: "listbox",
+          name: "shortcode",
+          label: "Verfügbar",
+          values: items,
+          onselect: function () { selected = this.value(); }
         }
-      });
-
-      // Falls onPostRender je nach Build nicht feuert -> fallback
-      setTimeout(attachHandlers, 50);
-      setTimeout(attachHandlers, 250);
-
-      function attachHandlers() {
+      ],
+      buttons: [
+        {
+          text: "Einfügen",
+          subtype: "primary",
+          onclick: function () {
+            editor.insertContent("[" + selected + "]");
+            win.close();
+          }
+        },
+        { text: "Abbrechen", onclick: "close" }
+      ],
+      onPostRender: function () {
         const $ = window.jQuery;
-        const rootEl = (win && win.getEl) ? win.getEl() : null;
-        if (!rootEl) return;
+        const root = win.getEl ? win.getEl() : null;
+        if (!root) return;
 
-        const $root = $(rootEl);
+        const $root = $(root);
+
+        // TinyMCE rendert listbox als <select> im Dialog
         const $search = $root.find("input.bds-sc-search").first();
-        const $select = $root.find("select.bds-sc-select").first();
+        const $select = $root.find('select').first(); // zuverlässigster Treffer im Dialog
 
         if (!$search.length || !$select.length) return;
 
-        // nur 1x binden
-        if ($root.data("bdsBound")) return;
-        $root.data("bdsBound", true);
+        // Mapping: value -> option
+        const allOptions = $select.find("option").toArray().map(o => ({
+          el: o,
+          value: o.value || "",
+          text: (o.text || "").toLowerCase()
+        }));
 
-        function renderOptions() {
-          const q = normalize(query);
+        function applyFilter(q) {
+          const query = (q || "").toLowerCase().trim();
 
-          const filtered = !q
-            ? list
-            : list.filter(sc => normalize(sc).includes(q));
+          let firstVisibleValue = "";
+          let visibleCount = 0;
 
-          $select.empty();
-
-          if (!filtered.length) {
-            $select.append('<option value="" disabled>— keine Treffer —</option>');
-            selected = "";
-            return;
-          }
-
-          filtered.forEach(sc => {
-            // text: [shortcode], value: shortcode
-            $select.append(
-              $("<option/>").val(sc).text("[" + sc + "]")
-            );
+          allOptions.forEach(o => {
+            const match = !query || o.text.indexOf(query) !== -1 || (o.value || "").toLowerCase().indexOf(query) !== -1;
+            o.el.style.display = match ? "" : "none";
+            if (match) {
+              visibleCount++;
+              if (!firstVisibleValue && o.value) firstVisibleValue = o.value;
+            }
           });
 
-          // Auswahl beibehalten oder erstes Element nehmen
-          if (selected && filtered.indexOf(selected) !== -1) {
-            $select.val(selected);
-          } else {
-            selected = filtered[0];
-            $select.val(selected);
+          // Wenn aktuelle Auswahl versteckt wurde -> auf erstes sichtbares springen
+          const currentVal = $select.val();
+          const currentVisible = allOptions.some(o => o.value === currentVal && o.el.style.display !== "none");
+          if (!currentVisible) {
+            if (firstVisibleValue) {
+              $select.val(firstVisibleValue).trigger("change");
+              selected = firstVisibleValue;
+            }
           }
         }
 
-        renderOptions();
+        // initial focus
+        setTimeout(function () { try { $search.get(0).focus(); } catch (e) {} }, 0);
 
         // live filter
         $search.on("input", function () {
-          query = $search.val();
-          renderOptions();
+          applyFilter($search.val());
         });
 
-        // selection
-        $select.on("change", function () {
-          selected = $select.val() || "";
-        });
-
-        // Enter im Suchfeld -> erstes Element einfügen
+        // Enter im Suchfeld -> einfügen
         $search.on("keydown", function (ev) {
           if (ev.key === "Enter") {
             ev.preventDefault();
-            if (!selected) return;
             editor.insertContent("[" + selected + "]");
             win.close();
           }
         });
 
-        // doppelklick auf option -> einfügen
-        $select.on("dblclick", function () {
-          if (!selected) return;
-          editor.insertContent("[" + selected + "]");
-          win.close();
+        // Change-Event vom select (damit selected sauber bleibt)
+        $select.on("change", function () {
+          const v = $select.val();
+          if (v) selected = v;
         });
-
-        // Fokus ins Suchfeld
-        try { $search.trigger("focus"); } catch (e) {}
       }
     });
-  }
+  });
+}
 
   // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
@@ -158,12 +136,16 @@
       if (editor.settings && editor.settings._bdsAdded) return;
       editor.settings._bdsAdded = true;
 
+      // Manche Setups erlauben addButton nicht mehr -> try/catch
       editor.addButton("bds_shortcode_picker", {
         text: "BDS-Shortcodes",
         icon: false,
         tooltip: "BDS-Shortcodes",
         onclick: function () { openPicker(editor); }
       });
+
+      // Wenn Toolbar vom Theme fix ist, erscheint der Button evtl. trotzdem nicht
+      // Deshalb zusätzlich DOM-Injection (siehe unten)
     } catch (e) {}
   }
 
@@ -171,6 +153,8 @@
   function injectDomButton(editor) {
     const $ = window.jQuery;
 
+    // TinyMCE Container hat id wie mceu_21, Toolbar-Gruppe wie .mce-toolbar-grp
+    // Wir suchen über den iframe id -> parent -> nächster .mce-tinymce container
     const iframeId = editor.iframeElement ? editor.iframeElement.id : null;
     if (!iframeId) return;
 
@@ -180,12 +164,14 @@
     const $tinymceWrap = $iframe.closest(".mce-tinymce");
     if (!$tinymceWrap.length) return;
 
+    // Nur 1x
     if ($tinymceWrap.data("bdsDomButton")) return;
     $tinymceWrap.data("bdsDomButton", true);
 
     const $toolbar = $tinymceWrap.find(".mce-toolbar-grp .mce-flow-layout").first();
     if (!$toolbar.length) return;
 
+    // Button HTML im TinyMCE-Look
     const $btn = $(
       '<div class="mce-container mce-flow-layout-item mce-btn-group" role="group">' +
         '<div class="mce-container-body">' +
@@ -208,6 +194,8 @@
 
   function onEditorReady(editor) {
     tryAddTinyMCEButton(editor);
+
+    // DOM-Injection etwas verzögert, weil YOOtheme Toolbar manchmal nachträglich rendert
     setTimeout(function () { injectDomButton(editor); }, 300);
     setTimeout(function () { injectDomButton(editor); }, 1200);
   }
@@ -215,12 +203,14 @@
   function hookEditors() {
     if (typeof tinymce === "undefined") return;
 
+    // bestehende
     (tinymce.editors || []).forEach(function (ed) {
       if (!ed) return;
       ed.on("init", function () { onEditorReady(ed); });
       if (ed.initialized) onEditorReady(ed);
     });
 
+    // neue (Customizer/Builder)
     tinymce.on("AddEditor", function (e) {
       if (e && e.editor) {
         e.editor.on("init", function () { onEditorReady(e.editor); });
