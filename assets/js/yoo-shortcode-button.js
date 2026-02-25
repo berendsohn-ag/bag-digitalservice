@@ -12,9 +12,7 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  function openPicker(editor, state) {
-  state = state || { q: "", selected: "" };
-
+ function openPicker(editor) {
   fetchShortcodes().then(list => {
     if (!list.length) {
       editor.windowManager && editor.windowManager.alert
@@ -23,34 +21,26 @@
       return;
     }
 
-    const q = (state.q || "").toLowerCase().trim();
-    const filtered = !q ? list : list.filter(sc => (sc || "").toLowerCase().includes(q));
+    // wir speichern Auswahl hier
+    let selected = list[0] || "";
 
-    const items = (filtered.length ? filtered : ["— keine Treffer —"]).map(sc => {
-      const isEmpty = sc === "— keine Treffer —";
-      return { text: isEmpty ? sc : "[" + sc + "]", value: isEmpty ? "" : sc };
-    });
-
-    // Auswahl beibehalten, falls noch vorhanden
-    let initialSelected = state.selected && filtered.includes(state.selected)
-      ? state.selected
-      : (items[0] ? items[0].value : "");
+    // eindeutige ID für datalist
+    const dlId = "bds_sc_datalist_" + Math.floor(Math.random() * 1e9);
 
     const win = editor.windowManager.open({
       title: "Shortcode einfügen",
       body: [
         {
-          type: "textbox",
-          name: "bds_sc_search",
-          label: "Suchen",
-          value: state.q || ""
-        },
-        {
-          type: "listbox",
-          name: "shortcode",
-          label: "Verfügbar",
-          values: items,
-          value: initialSelected
+          type: "container",
+          html:
+            '<label style="display:block;font-size:12px;margin:0 0 4px;">Shortcode suchen</label>' +
+            '<input class="bds-sc-combo" list="' + dlId + '" ' +
+                   'style="width:100%;box-sizing:border-box;padding:6px 8px;" ' +
+                   'placeholder="Tippe, um zu suchen…">' +
+            '<datalist id="' + dlId + '"></datalist>' +
+            '<div style="font-size:11px;opacity:.7;margin-top:6px;">' +
+              'Tipp: Enter = einfügen' +
+            '</div>'
         }
       ],
       buttons: [
@@ -58,11 +48,8 @@
           text: "Einfügen",
           subtype: "primary",
           onclick: function () {
-            // ✅ WERT IMMER aus Dialog-State holen
-            const data = win.toJSON ? win.toJSON() : {};
-            const v = (data && data.shortcode) ? data.shortcode : "";
+            const v = readValue();
             if (!v) return;
-
             editor.insertContent("[" + v + "]");
             win.close();
           }
@@ -73,38 +60,51 @@
         const $ = window.jQuery;
         const root = win.getEl ? win.getEl() : null;
         if (!root) return;
-
         const $root = $(root);
-        const $search = $root.find("input.mce-textbox").first();
-        if (!$search.length) return;
 
-        // Debounce, damit es nicht “flackert”
-        let t = null;
-        $search.on("input", function () {
-          clearTimeout(t);
-          const nextQ = $search.val();
+        const $input = $root.find("input.bds-sc-combo").first();
+        const $datalist = $root.find("datalist#" + dlId).first();
+        if (!$input.length || !$datalist.length) return;
 
-          t = setTimeout(function () {
-            const data = win.toJSON ? win.toJSON() : {};
-            const curSel = (data && data.shortcode) ? data.shortcode : initialSelected;
-
-            // Fenster sauber schließen und mit neuem State neu öffnen
-            win.close();
-            openPicker(editor, { q: nextQ, selected: curSel });
-          }, 120);
+        // datalist füllen
+        list.forEach(sc => {
+          const opt = document.createElement("option");
+          opt.value = sc;
+          $datalist.get(0).appendChild(opt);
         });
 
-        // Fokus ins Suchfeld (Cursor ans Ende)
-        setTimeout(function () {
-          try {
-            const el = $search.get(0);
-            el.focus();
-            const v = el.value || "";
-            el.setSelectionRange(v.length, v.length);
-          } catch (e) {}
-        }, 0);
+        // default
+        $input.val(selected);
+
+        // live: selected aktualisieren
+        $input.on("input", function () {
+          selected = $input.val();
+        });
+
+        // Enter = einfügen
+        $input.on("keydown", function (ev) {
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            const v = readValue();
+            if (!v) return;
+            editor.insertContent("[" + v + "]");
+            win.close();
+          }
+        });
+
+        // Fokus
+        setTimeout(function () { try { $input.get(0).focus(); } catch(e) {} }, 0);
       }
     });
+
+    function readValue() {
+      const v = (selected || "").trim();
+      // optional: nur erlauben, wenn in Liste vorhanden
+      if (!v) return "";
+      // wenn du NUR bekannte Shortcodes erlauben willst, entkommentieren:
+      // if (list.indexOf(v) === -1) return "";
+      return v;
+    }
   });
 }
 
