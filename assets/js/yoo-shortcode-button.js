@@ -14,7 +14,6 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  // ✅ Picker: textbox + datalist autosuggest (kein select/listbox)
   function openPicker(editor) {
     fetchShortcodes().then(list => {
       if (!list.length) {
@@ -24,17 +23,32 @@
         return;
       }
 
-      const dlId = "bds_sc_dl_" + Math.floor(Math.random() * 1e9);
+      const $ = window.jQuery;
 
+      const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
+      let selected = items[0].value;
+
+      // eindeutige id pro dialog
+      const dlgId = "bds_sc_dlg_" + Math.floor(Math.random() * 1e9);
+      const dlId  = "bds_sc_dl_" + Math.floor(Math.random() * 1e9);
+
+      // Dialog öffnen: textbox + listbox
       editor.windowManager.open({
         title: "Shortcode einfügen",
         body: [
+          { type: "label", text: "", name: dlgId }, // Marker (nur um unsere Instanz zu erkennen)
           {
             type: "textbox",
             name: "bds_sc",
-            label: "Shortcode",
-            value: "",
-            placeholder: "Tippe zum Suchen…"
+            label: "Suchen",
+            value: ""
+          },
+          {
+            type: "listbox",
+            name: "shortcode",
+            label: "Verfügbar",
+            values: items,
+            onselect: function () { selected = this.value(); }
           }
         ],
         buttons: [
@@ -42,7 +56,7 @@
             text: "Einfügen",
             subtype: "primary",
             onclick: function () {
-              const v = readValue();
+              const v = readSearchValue(dlId) || selected;
               if (!v) return;
               editor.insertContent("[" + v + "]");
               editor.windowManager.close();
@@ -52,48 +66,90 @@
         ]
       });
 
-      // datalist an das sichtbare Modal hängen (ohne win/getEl/toJSON)
-      setTimeout(function () {
-        const $ = window.jQuery;
+      // Polling: weil Customizer den Dialog-DOM manchmal verzögert rendert
+      attachDatalistWithRetry(list, dlgId, dlId, function onEnter(val) {
+        const v = val || selected;
+        if (!v) return;
+        editor.insertContent("[" + v + "]");
+        editor.windowManager.close();
+      });
 
-        const $win = $(".mce-window:visible").last();
+      function readSearchValue(dlIdLocal) {
+        const $win = findOurDialogRoot(dlgId);
+        if (!$win || !$win.length) return "";
+
         const $input = $win.find("input.mce-textbox").first();
-        if (!$input.length) return;
+        if (!$input.length) return "";
+        const v = ($input.val() || "").trim();
 
-        // datalist einmalig hinzufügen
-        if ($win.find("datalist#" + dlId).length === 0) {
-          const $dl = $('<datalist id="' + dlId + '"></datalist>');
-          list.forEach(sc => $dl.append($("<option/>").attr("value", sc)));
-          $win.append($dl);
-        }
-
-        $input.attr("list", dlId);
-
-        // Enter = Einfügen
-        $input.off("keydown.bds").on("keydown.bds", function (ev) {
-          if (ev.key === "Enter") {
-            ev.preventDefault();
-            const v = ($input.val() || "").trim();
-            if (!v) return;
-            editor.insertContent("[" + v + "]");
-            editor.windowManager.close();
-          }
-        });
-
-        // Fokus
-        try { $input.get(0).focus(); } catch (e) {}
-      }, 80);
-
-      function readValue() {
-        const $ = window.jQuery;
-        const $win = $(".mce-window:visible").last();
-        const $input = $win.find("input.mce-textbox").first();
-        const v = $input.length ? ($input.val() || "").trim() : "";
-
-        // Optional: nur bekannte Shortcodes erlauben (empfohlen)
+        // Optional: nur erlaubte Shortcodes
         // if (v && list.indexOf(v) === -1) return "";
 
         return v;
+      }
+
+      function findOurDialogRoot(markerName) {
+        // Wir nehmen das zuletzt sichtbare Modal, aber NUR wenn darin unser Marker-Label existiert.
+        // Dadurch hängen wir nicht aus Versehen an irgendeinem anderen Modal.
+        const $wins = $(".mce-window:visible");
+        for (let i = $wins.length - 1; i >= 0; i--) {
+          const $w = $($wins[i]);
+
+          // TinyMCE label erzeugt meist ein .mce-label, wir suchen nach unserem markerName irgendwo im innerHTML
+          // (marker ist leerer label, aber "name" existiert intern nicht im DOM -> deshalb: fallback: wir matchen über Reihenfolge)
+          // => robusteste Heuristik: Modal muss genau 1 textbox haben (unser Suchfeld) UND eine listbox/select (shortcode).
+          const hasTextbox = $w.find("input.mce-textbox").length >= 1;
+          const hasSelect  = $w.find("select").length >= 1 || $w.find(".mce-combobox, .mce-listbox").length >= 1;
+
+          if (hasTextbox && hasSelect) return $w;
+        }
+        return null;
+      }
+
+      function attachDatalistWithRetry(list, markerName, dlIdLocal, onEnter) {
+        const maxTries = 25;
+        let tries = 0;
+
+        (function tick() {
+          tries++;
+
+          const $win = findOurDialogRoot(markerName);
+          if ($win && $win.length) {
+            const $input = $win.find("input.mce-textbox").first();
+            if ($input.length) {
+              // datalist direkt NACH dem input einfügen (stabiler als ans window append)
+              if ($win.find("datalist#" + dlIdLocal).length === 0) {
+                const $dl = $('<datalist id="' + dlIdLocal + '"></datalist>');
+                list.forEach(sc => $dl.append($("<option/>").attr("value", sc)));
+                $input.after($dl);
+              }
+
+              $input.attr("list", dlIdLocal);
+
+              // exakte Übereinstimmung -> selected synchronisieren (nice)
+              $input.off("input.bds").on("input.bds", function () {
+                const v = ($input.val() || "").trim();
+                if (v && list.indexOf(v) !== -1) selected = v;
+              });
+
+              // Enter = einfügen
+              $input.off("keydown.bds").on("keydown.bds", function (ev) {
+                if (ev.key === "Enter") {
+                  ev.preventDefault();
+                  const v = ($input.val() || "").trim();
+                  onEnter(v);
+                }
+              });
+
+              try { $input.get(0).focus(); } catch (e) {}
+              return; // fertig
+            }
+          }
+
+          if (tries < maxTries) {
+            setTimeout(tick, 80);
+          }
+        })();
       }
     });
   }
