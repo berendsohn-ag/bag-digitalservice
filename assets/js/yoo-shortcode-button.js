@@ -1,52 +1,129 @@
 (function () {
-  function ajaxCfg() {
-    return {
-      url: (window.BDSShortcodes && BDSShortcodes.ajaxUrl) ? BDSShortcodes.ajaxUrl : (window.ajaxurl || "/wp-admin/admin-ajax.php"),
-      nonce: (window.BDSShortcodes && BDSShortcodes.nonce) ? BDSShortcodes.nonce : ""
-    };
-  }
 
-  function fetchShortcodes() {
-    const a = ajaxCfg();
-    return window.jQuery.post(a.url, { action: "bds_shortcodes_list", nonce: a.nonce })
-      .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
-  }
+  // helpers
+function ajaxCfg() {
+  return {
+    url: (window.BDSShortcodes && BDSShortcodes.ajaxUrl) ? BDSShortcodes.ajaxUrl : (window.ajaxurl || "/wp-admin/admin-ajax.php"),
+    nonce: (window.BDSShortcodes && BDSShortcodes.nonce) ? BDSShortcodes.nonce : ""
+  };
+}
 
-  function openPicker(editor) {
-    fetchShortcodes().then(list => {
-      if (!list.length) {
-        editor.windowManager && editor.windowManager.alert
-          ? editor.windowManager.alert("Keine Shortcodes gefunden.")
-          : alert("Keine Shortcodes gefunden.");
-        return;
+function fetchShortcodes() {
+  const a = ajaxCfg();
+  return window.jQuery.post(a.url, { action: "bds_shortcodes_list", nonce: a.nonce })
+    .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
+}
+
+function normalize(s) {
+  return (s || "").toString().toLowerCase().trim();
+}
+
+function openPicker(editor) {
+  fetchShortcodes().then(list => {
+    if (!list.length) {
+      editor.windowManager && editor.windowManager.alert
+        ? editor.windowManager.alert("Keine Shortcodes gefunden.")
+        : alert("Keine Shortcodes gefunden.");
+      return;
+    }
+
+    // Dialog-State
+    let selected = list[0] || "";
+    let query = "";
+
+    // Dialog öffnen (nur HTML – kein listbox)
+    const win = editor.windowManager.open({
+      title: "Shortcode einfügen",
+      body: [
+        {
+          type: "container",
+          html:
+            '<div class="bds-sc-picker">' +
+              '<label style="display:block;font-size:12px;margin:0 0 4px;">Suchen</label>' +
+              '<input type="text" class="bds-sc-search" placeholder="Tippe zum Filtern…" ' +
+                     'style="width:100%;box-sizing:border-box;padding:6px 8px;margin:0 0 10px;" />' +
+
+              '<label style="display:block;font-size:12px;margin:0 0 4px;">Verfügbar</label>' +
+              '<select class="bds-sc-select" size="10" ' +
+                      'style="width:100%;box-sizing:border-box;padding:6px 8px;"></select>' +
+            '</div>'
+        }
+      ],
+      buttons: [
+        {
+          text: "Einfügen",
+          subtype: "primary",
+          onclick: function () {
+            if (!selected) return;
+            editor.insertContent("[" + selected + "]");
+            win.close();
+          }
+        },
+        { text: "Abbrechen", onclick: "close" }
+      ],
+      onPostRender: function () {
+        const $ = window.jQuery;
+        const $root = $(win.getEl ? win.getEl() : document.body);
+
+        const $search = $root.find("input.bds-sc-search").first();
+        const $select = $root.find("select.bds-sc-select").first();
+
+        function renderOptions() {
+          const q = normalize(query);
+
+          const filtered = !q
+            ? list
+            : list.filter(sc => normalize(sc).includes(q));
+
+          $select.empty();
+
+          if (!filtered.length) {
+            $select.append('<option value="" disabled>— keine Treffer —</option>');
+            selected = "";
+            return;
+          }
+
+          filtered.forEach(sc => {
+            const opt = $("<option/>").val(sc).text("[" + sc + "]");
+            $select.append(opt);
+          });
+
+          // Auswahl beibehalten, falls noch vorhanden – sonst erstes Element
+          if (selected && filtered.includes(selected)) {
+            $select.val(selected);
+          } else {
+            selected = filtered[0];
+            $select.val(selected);
+          }
+        }
+
+        // initial
+        renderOptions();
+
+        // live filter
+        $search.on("input", function () {
+          query = $search.val();
+          renderOptions();
+        });
+
+        // select change
+        $select.on("change", function () {
+          selected = $select.val() || "";
+        });
+
+        // Doppelklick = einfügen
+        $select.on("dblclick", function () {
+          if (!selected) return;
+          editor.insertContent("[" + selected + "]");
+          win.close();
+        });
+
+        // Fokus direkt ins Suchfeld
+        $search.trigger("focus");
       }
-
-      const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
-      let selected = items[0].value;
-
-      editor.windowManager.open({
-        title: "Shortcode einfügen",
-        body: [{
-          type: "listbox",
-          name: "shortcode",
-          label: "Verfügbar",
-          values: items,
-          onselect: function () { selected = this.value(); }
-        }],
-        buttons: [
-          {
-            text: "Einfügen",
-            subtype: "primary",
-            onclick: function () {
-              editor.insertContent("[" + selected + "]");
-              editor.windowManager.close();
-            }
-          },
-          { text: "Abbrechen", onclick: "close" }
-        ]
-      });
     });
-  }
+  });
+}
 
   // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
