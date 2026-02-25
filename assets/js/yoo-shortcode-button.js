@@ -94,7 +94,7 @@
     }
   });
 }
-
+  
   // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
     try {
