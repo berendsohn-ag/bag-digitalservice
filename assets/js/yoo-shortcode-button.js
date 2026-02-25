@@ -10,16 +10,10 @@
 
   function fetchShortcodes() {
     const a = ajaxCfg();
-    return window.jQuery
-      .post(a.url, { action: "bds_shortcodes_list", nonce: a.nonce })
-      .then(res =>
-        (res && res.success && res.data && Array.isArray(res.data.shortcodes))
-          ? res.data.shortcodes
-          : []
-      );
+    return window.jQuery.post(a.url, { action: "bds_shortcodes_list", nonce: a.nonce })
+      .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  // ---------- Picker (textbox + datalist) ----------
   function openPicker(editor) {
     fetchShortcodes().then(list => {
       if (!list.length) {
@@ -29,16 +23,30 @@
         return;
       }
 
+      const $ = window.jQuery;
+
+      const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
+      let selected = items[0].value;
+
+      // datalist id
       const dlId = "bds_sc_dl_" + Math.floor(Math.random() * 1e9);
 
+      // Dialog öffnen: textbox + listbox
       editor.windowManager.open({
         title: "Shortcode einfügen",
         body: [
           {
             type: "textbox",
-            name: "bds_sc",
+            name: "bds_sc_search",
             label: "Suchen",
             value: ""
+          },
+          {
+            type: "listbox",
+            name: "shortcode",
+            label: "Verfügbar",
+            values: items,
+            onselect: function () { selected = this.value(); }
           }
         ],
         buttons: [
@@ -46,7 +54,8 @@
             text: "Einfügen",
             subtype: "primary",
             onclick: function () {
-              const v = readFromActiveDialog();
+              // 1) wenn Suchfeld befüllt: das nehmen, sonst listbox-selected
+              const v = readSearchValue() || selected;
               if (!v) return;
 
               editor.insertContent("[" + v + "]");
@@ -57,15 +66,13 @@
         ]
       });
 
-      // datalist ans sichtbare Modal hängen (Customizer-sicher)
+      // Nach Render: datalist an textbox hängen (ohne win/getEl)
       setTimeout(function () {
-        const $ = window.jQuery;
-
         const $win = $(".mce-window:visible").last();
         const $input = $win.find("input.mce-textbox").first();
         if (!$input.length) return;
 
-        // datalist einmalig hinzufügen
+        // datalist einfügen (einmalig)
         if ($win.find("datalist#" + dlId).length === 0) {
           const $dl = $('<datalist id="' + dlId + '"></datalist>');
           list.forEach(sc => $dl.append($("<option/>").attr("value", sc)));
@@ -74,11 +81,29 @@
 
         $input.attr("list", dlId);
 
-        // Enter = Einfügen
+        // live: wenn exakte Übereinstimmung, selected synchronisieren
+        $input.off("input.bds").on("input.bds", function () {
+          const v = ($input.val() || "").trim();
+          if (!v) return;
+
+          // wenn v exakt in list ist -> selected setzen
+          if (list.indexOf(v) !== -1) {
+            selected = v;
+
+            // versuchen, listbox optisch mitzuziehen (optional)
+            // manchmal ist es kein echtes <select>, daher try/catch
+            try {
+              const $sel = $win.find("select").last();
+              if ($sel.length) $sel.val(v).trigger("change");
+            } catch (e) {}
+          }
+        });
+
+        // Enter = einfügen
         $input.off("keydown.bds").on("keydown.bds", function (ev) {
           if (ev.key === "Enter") {
             ev.preventDefault();
-            const v = ($input.val() || "").trim();
+            const v = readSearchValue() || selected;
             if (!v) return;
 
             editor.insertContent("[" + v + "]");
@@ -86,22 +111,24 @@
           }
         });
 
+        // Fokus
         try { $input.get(0).focus(); } catch (e) {}
       }, 80);
 
-      function readFromActiveDialog() {
-        const $ = window.jQuery;
+      function readSearchValue() {
         const $win = $(".mce-window:visible").last();
         const $input = $win.find("input.mce-textbox").first();
-        return $input.length ? ($input.val() || "").trim() : "";
+        const v = $input.length ? ($input.val() || "").trim() : "";
+        // Wenn du NUR erlaubte Shortcodes zulassen willst:
+        // if (v && list.indexOf(v) === -1) return "";
+        return v;
       }
     });
   }
 
-  // ---------- Button: TinyMCE API ----------
+  // 1) TinyMCE Button (falls erlaubt)
   function tryAddTinyMCEButton(editor) {
     try {
-      if (!editor || !editor.addButton) return;
       if (editor.settings && editor.settings._bdsAdded) return;
       editor.settings._bdsAdded = true;
 
@@ -114,12 +141,11 @@
     } catch (e) {}
   }
 
-  // ---------- Button: DOM Injection (YOOtheme-sicher) ----------
+  // 2) Toolbar DOM-Injection (YOOtheme-sicher)
   function injectDomButton(editor) {
     const $ = window.jQuery;
-    if (!$) return;
 
-    const iframeId = editor && editor.iframeElement ? editor.iframeElement.id : null;
+    const iframeId = editor.iframeElement ? editor.iframeElement.id : null;
     if (!iframeId) return;
 
     const $iframe = $("#" + iframeId);
@@ -156,69 +182,32 @@
 
   function onEditorReady(editor) {
     tryAddTinyMCEButton(editor);
-
-    // YOOtheme rendert Toolbars gern später -> mehrfach versuchen
     setTimeout(function () { injectDomButton(editor); }, 300);
     setTimeout(function () { injectDomButton(editor); }, 1200);
-    setTimeout(function () { injectDomButton(editor); }, 2500);
   }
 
-  // ---------- Robust Hooking: Polling + AddEditor ----------
-  function hookEditorsOnce() {
-    if (typeof tinymce === "undefined" || !tinymce) return false;
-
-    let found = false;
+  function hookEditors() {
+    if (typeof tinymce === "undefined") return;
 
     (tinymce.editors || []).forEach(function (ed) {
       if (!ed) return;
-      found = true;
-
-      // init hook
-      if (!ed._bdsInitHooked) {
-        ed._bdsInitHooked = true;
-        ed.on("init", function () { onEditorReady(ed); });
-      }
-
-      // falls schon init
+      ed.on("init", function () { onEditorReady(ed); });
       if (ed.initialized) onEditorReady(ed);
     });
 
-    // AddEditor kann im Customizer auch mal nicht feuern, aber wenn doch: nutzen
-    if (!tinymce._bdsAddEditorHooked && tinymce.on) {
-      tinymce._bdsAddEditorHooked = true;
-      tinymce.on("AddEditor", function (e) {
-        if (e && e.editor) {
-          e.editor.on("init", function () { onEditorReady(e.editor); });
-          // falls schon init
-          if (e.editor.initialized) onEditorReady(e.editor);
-        }
-      });
-    }
-
-    return found;
+    tinymce.on("AddEditor", function (e) {
+      if (e && e.editor) {
+        e.editor.on("init", function () { onEditorReady(e.editor); });
+      }
+    });
   }
 
   function boot() {
     if (!window.jQuery || typeof tinymce === "undefined") {
-      setTimeout(boot, 300);
+      setTimeout(boot, 250);
       return;
     }
-
-    // Polling: im Customizer kommen Editor/Toolbar oft verzögert
-    let tries = 0;
-    (function poll() {
-      tries++;
-      const found = hookEditorsOnce();
-
-      // solange versuchen, bis mind. 1 Editor gefunden wurde, dann noch ein paar Runden
-      if (!found && tries < 40) {
-        setTimeout(poll, 300);
-        return;
-      }
-      if (tries < 60) {
-        setTimeout(poll, 600);
-      }
-    })();
+    hookEditors();
   }
 
   boot();
