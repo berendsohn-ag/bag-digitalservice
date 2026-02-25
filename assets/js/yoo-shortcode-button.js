@@ -12,7 +12,9 @@
       .then(res => (res && res.success && res.data && Array.isArray(res.data.shortcodes)) ? res.data.shortcodes : []);
   }
 
-  function openPicker(editor) {
+  function openPicker(editor, state) {
+  state = state || { q: "", selected: "" };
+
   fetchShortcodes().then(list => {
     if (!list.length) {
       editor.windowManager && editor.windowManager.alert
@@ -21,24 +23,34 @@
       return;
     }
 
-    const items = list.map(sc => ({ text: "[" + sc + "]", value: sc }));
+    const q = (state.q || "").toLowerCase().trim();
+    const filtered = !q ? list : list.filter(sc => (sc || "").toLowerCase().includes(q));
 
-    let win = null;
+    const items = (filtered.length ? filtered : ["— keine Treffer —"]).map(sc => {
+      const isEmpty = sc === "— keine Treffer —";
+      return { text: isEmpty ? sc : "[" + sc + "]", value: isEmpty ? "" : sc };
+    });
 
-    win = editor.windowManager.open({
+    // Auswahl beibehalten, falls noch vorhanden
+    let initialSelected = state.selected && filtered.includes(state.selected)
+      ? state.selected
+      : (items[0] ? items[0].value : "");
+
+    const win = editor.windowManager.open({
       title: "Shortcode einfügen",
       body: [
         {
           type: "textbox",
           name: "bds_sc_search",
           label: "Suchen",
-          value: ""
+          value: state.q || ""
         },
         {
           type: "listbox",
           name: "shortcode",
           label: "Verfügbar",
-          values: items
+          values: items,
+          value: initialSelected
         }
       ],
       buttons: [
@@ -46,128 +58,54 @@
           text: "Einfügen",
           subtype: "primary",
           onclick: function () {
-            // ✅ Wert IMMER direkt aus dem echten <select> holen
-            const v = readSelectedFromDialog(win);
+            // ✅ WERT IMMER aus Dialog-State holen
+            const data = win.toJSON ? win.toJSON() : {};
+            const v = (data && data.shortcode) ? data.shortcode : "";
             if (!v) return;
+
             editor.insertContent("[" + v + "]");
-            editor.windowManager.close();
+            win.close();
           }
         },
         { text: "Abbrechen", onclick: "close" }
       ],
       onPostRender: function () {
-        attachLiveFilter(win, list);
+        const $ = window.jQuery;
+        const root = win.getEl ? win.getEl() : null;
+        if (!root) return;
+
+        const $root = $(root);
+        const $search = $root.find("input.mce-textbox").first();
+        if (!$search.length) return;
+
+        // Debounce, damit es nicht “flackert”
+        let t = null;
+        $search.on("input", function () {
+          clearTimeout(t);
+          const nextQ = $search.val();
+
+          t = setTimeout(function () {
+            const data = win.toJSON ? win.toJSON() : {};
+            const curSel = (data && data.shortcode) ? data.shortcode : initialSelected;
+
+            // Fenster sauber schließen und mit neuem State neu öffnen
+            win.close();
+            openPicker(editor, { q: nextQ, selected: curSel });
+          }, 120);
+        });
+
+        // Fokus ins Suchfeld (Cursor ans Ende)
+        setTimeout(function () {
+          try {
+            const el = $search.get(0);
+            el.focus();
+            const v = el.value || "";
+            el.setSelectionRange(v.length, v.length);
+          } catch (e) {}
+        }, 0);
       }
     });
   });
-
-  // --- helpers (nur innerhalb openPicker) ---
-  function norm(s) {
-    return (s || "").toString().toLowerCase().trim();
-  }
-
-  function findDialogRoot(win) {
-    return win && win.getEl ? win.getEl() : null;
-  }
-
-  function findSearchInput($root) {
-    // TinyMCE textbox -> input.mce-textbox
-    return $root.find("input.mce-textbox").first();
-  }
-
-  function findListboxSelect($root) {
-    // wir nehmen das select innerhalb der listbox-row
-    // (bei manchen Setups gibt’s mehrere selects, daher: das, was in der Nähe vom label "Verfügbar" ist)
-    let $sel = $root.find("select").last();
-
-    // Falls das mal falsch ist, alternative: nimm das select, das am meisten options hat
-    const $all = $root.find("select");
-    if ($all.length > 1) {
-      let best = null, bestCount = -1;
-      $all.each(function () {
-        const c = this.options ? this.options.length : 0;
-        if (c > bestCount) { bestCount = c; best = this; }
-      });
-      if (best) $sel = $(best);
-    }
-
-    return $sel;
-  }
-
-  function readSelectedFromDialog(win) {
-    const $ = window.jQuery;
-    const rootEl = findDialogRoot(win);
-    if (!rootEl) return "";
-    const $root = $(rootEl);
-    const $select = findListboxSelect($root);
-    return ($select && $select.length) ? ($select.val() || "") : "";
-  }
-
-  function attachLiveFilter(win, fullList) {
-    const $ = window.jQuery;
-    const rootEl = findDialogRoot(win);
-    if (!rootEl) return;
-
-    const $root = $(rootEl);
-    const $search = findSearchInput($root);
-    const $select = findListboxSelect($root);
-
-    if (!$search.length || !$select.length) return;
-
-    // Original-Options als Datenquelle (value/text)
-    const all = fullList.slice();
-
-    // Render-Funktion: SELECT komplett neu befüllen (stabiler als option display:none)
-    function render(filtered) {
-      const current = $select.val();
-
-      $select.empty();
-
-      if (!filtered.length) {
-        $select.append($("<option/>").val("").text("— keine Treffer —"));
-        $select.val("");
-        return;
-      }
-
-      filtered.forEach(sc => {
-        $select.append($("<option/>").val(sc).text("[" + sc + "]"));
-      });
-
-      // Auswahl beibehalten, sonst erstes Element
-      if (current && filtered.indexOf(current) !== -1) {
-        $select.val(current);
-      } else {
-        $select.val(filtered[0]);
-      }
-
-      // change triggern, damit TinyMCE intern sauber bleibt
-      $select.trigger("change");
-    }
-
-    // initial
-    render(all);
-
-    // live filter
-    $search.on("input", function () {
-      const q = norm($search.val());
-      const filtered = !q ? all : all.filter(sc => norm(sc).includes(q));
-      render(filtered);
-    });
-
-    // Enter im Suchfeld = einfügen
-    $search.on("keydown", function (ev) {
-      if (ev.key === "Enter") {
-        ev.preventDefault();
-        const v = $select.val();
-        if (!v) return;
-        editor.insertContent("[" + v + "]");
-        editor.windowManager.close();
-      }
-    });
-
-    // Fokus
-    setTimeout(function () { try { $search.get(0).focus(); } catch(e) {} }, 0);
-  }
 }
 
   // 1) TinyMCE Button (falls erlaubt)
