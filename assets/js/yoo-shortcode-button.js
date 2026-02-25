@@ -27,17 +27,14 @@
     const win = editor.windowManager.open({
       title: "Shortcode einfügen",
       body: [
-        // 1) Search-Input (als HTML oberhalb der Listbox)
+        // ✅ TinyMCE textbox (wird bei dir gerendert)
         {
-          type: "container",
-          html:
-            '<div class="bds-sc-search-wrap" style="margin-bottom:8px;">' +
-              '<label style="display:block;font-size:12px;margin-bottom:4px;">Suchen</label>' +
-              '<input type="text" class="bds-sc-search" placeholder="Tippe zum Filtern…" ' +
-                     'style="width:100%;box-sizing:border-box;padding:6px 8px;" />' +
-            '</div>'
+          type: "textbox",
+          name: "bds_sc_search",
+          label: "Suchen",
+          value: "",
         },
-        // 2) Deine Listbox bleibt gleich
+        // ✅ dein bewährtes listbox
         {
           type: "listbox",
           name: "shortcode",
@@ -59,59 +56,56 @@
       ],
       onPostRender: function () {
         const $ = window.jQuery;
-        const root = win.getEl ? win.getEl() : null;
-        if (!root) return;
+        const rootEl = win.getEl ? win.getEl() : null;
+        if (!rootEl) return;
 
-        const $root = $(root);
+        const $root = $(rootEl);
 
-        // TinyMCE rendert listbox als <select> im Dialog
-        const $search = $root.find("input.bds-sc-search").first();
-        const $select = $root.find('select').first(); // zuverlässigster Treffer im Dialog
+        // textbox input finden (in deinem Dialog gibt’s i.d.R. nur diesen einen textbox)
+        const $search = $root.find("input.mce-textbox").first();
+        // listbox select finden
+        const $select = $root.find("select").last();
 
         if (!$search.length || !$select.length) return;
 
-        // Mapping: value -> option
-        const allOptions = $select.find("option").toArray().map(o => ({
+        // Optionen cachen
+        const opts = $select.find("option").toArray().map(o => ({
           el: o,
-          value: o.value || "",
+          value: (o.value || "").toLowerCase(),
           text: (o.text || "").toLowerCase()
         }));
 
         function applyFilter(q) {
           const query = (q || "").toLowerCase().trim();
+          let firstVisible = null;
 
-          let firstVisibleValue = "";
-          let visibleCount = 0;
-
-          allOptions.forEach(o => {
-            const match = !query || o.text.indexOf(query) !== -1 || (o.value || "").toLowerCase().indexOf(query) !== -1;
+          opts.forEach(o => {
+            const match = !query || o.text.includes(query) || o.value.includes(query);
             o.el.style.display = match ? "" : "none";
-            if (match) {
-              visibleCount++;
-              if (!firstVisibleValue && o.value) firstVisibleValue = o.value;
-            }
+            if (match && firstVisible === null) firstVisible = o.el.value;
           });
 
-          // Wenn aktuelle Auswahl versteckt wurde -> auf erstes sichtbares springen
-          const currentVal = $select.val();
-          const currentVisible = allOptions.some(o => o.value === currentVal && o.el.style.display !== "none");
-          if (!currentVisible) {
-            if (firstVisibleValue) {
-              $select.val(firstVisibleValue).trigger("change");
-              selected = firstVisibleValue;
-            }
+          // wenn aktuelle Auswahl weggefiltert wurde -> erstes sichtbares wählen
+          const cur = $select.val();
+          const curVisible = opts.some(o => o.el.value === cur && o.el.style.display !== "none");
+          if (!curVisible && firstVisible) {
+            $select.val(firstVisible).trigger("change");
+            selected = firstVisible;
           }
         }
 
-        // initial focus
-        setTimeout(function () { try { $search.get(0).focus(); } catch (e) {} }, 0);
+        // selected sauber halten
+        $select.on("change", function () {
+          const v = $select.val();
+          if (v) selected = v;
+        });
 
         // live filter
         $search.on("input", function () {
           applyFilter($search.val());
         });
 
-        // Enter im Suchfeld -> einfügen
+        // Enter im Suchfeld = einfügen
         $search.on("keydown", function (ev) {
           if (ev.key === "Enter") {
             ev.preventDefault();
@@ -120,11 +114,8 @@
           }
         });
 
-        // Change-Event vom select (damit selected sauber bleibt)
-        $select.on("change", function () {
-          const v = $select.val();
-          if (v) selected = v;
-        });
+        // Fokus ins Suchfeld
+        setTimeout(function () { try { $search.get(0).focus(); } catch(e) {} }, 0);
       }
     });
   });
