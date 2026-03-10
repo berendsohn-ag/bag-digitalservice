@@ -7,447 +7,255 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Login_Mask {
 
-	const SLUG                = 'mellon';
-	const RATE_LIMIT_MAX      = 5;   // max. Fehlversuche
-	const RATE_LIMIT_WINDOW   = 900; // 15 Minuten
-	const RATE_LIMIT_LOCKOUT  = 1800; // 30 Minuten Sperre
+	const SLUG = 'mellon';
+
+	/**
+	 * Merker, ob ein direkter wp-login.php Aufruf erkannt wurde.
+	 *
+	 * @var bool
+	 */
+	private static $wp_login_php = false;
 
 	public static function init() {
-		add_action( 'init', [ __CLASS__, 'add_rewrite' ] );
-		add_filter( 'query_vars', [ __CLASS__, 'add_query_vars' ] );
+		add_action( 'plugins_loaded', [ __CLASS__, 'plugins_loaded' ], 9999 );
+		add_action( 'setup_theme', [ __CLASS__, 'setup_theme' ], 1 );
+		add_action( 'wp_loaded', [ __CLASS__, 'wp_loaded' ] );
 
-		add_action( 'template_redirect', [ __CLASS__, 'router' ], 1 );
-		add_action( 'login_init', [ __CLASS__, 'redirect_wp_login' ] );
-
+		add_filter( 'site_url', [ __CLASS__, 'filter_site_url' ], 10, 4 );
+		add_filter( 'network_site_url', [ __CLASS__, 'filter_network_site_url' ], 10, 3 );
+		add_filter( 'wp_redirect', [ __CLASS__, 'filter_wp_redirect' ], 10, 2 );
 		add_filter( 'login_url', [ __CLASS__, 'filter_login_url' ], 10, 3 );
-		add_filter( 'logout_url', [ __CLASS__, 'filter_logout_url' ], 10, 2 );
 
-		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'maybe_enqueue_mask_assets' ] );
+		add_action( 'login_enqueue_scripts', [ __CLASS__, 'login_styles' ] );
 
-		// Deprecated-Output auf eigener Maske verhindern
-		add_action( 'init', [ __CLASS__, 'remove_deprecated_emoji_style_hooks' ], 20 );
+		// Verhindert Standard-Weiterleitungen wie /wp-admin -> /wp-login.php
+		remove_action( 'template_redirect', 'wp_redirect_admin_locations', 1000 );
 	}
 
+	/**
+	 * Nur für Kompatibilität mit deinem Main-Plugin.
+	 * Hier absichtlich leer, damit Activation Hook nicht bricht.
+	 */
 	public static function add_rewrite() {
-		add_rewrite_rule(
-			'^' . preg_quote( trim( self::SLUG, '/' ), '/' ) . '/?$',
-			'index.php?bds_login=1',
-			'top'
-		);
+		// Kein WP-Rewrite nötig für diesen Ansatz.
 	}
 
-	public static function add_query_vars( $vars ) {
-		$vars[] = 'bds_login';
-		return $vars;
-	}
+	/**
+	 * Frühes Request-Umschreiben im Stil von WPS Hide Login.
+	 */
+	public static function plugins_loaded() {
+		global $pagenow;
 
-	public static function router() {
 		if ( self::is_bypass_context() ) {
 			return;
 		}
 
-		if ( self::is_mask_request() ) {
-			self::handle_mask_request();
-			exit;
-		}
+		$request_uri = rawurldecode( $_SERVER['REQUEST_URI'] ?? '' );
+		$request     = parse_url( $request_uri );
+		$path        = isset( $request['path'] ) ? untrailingslashit( $request['path'] ) : '';
 
-		if ( self::is_wp_admin_request() && ! is_user_logged_in() ) {
-			wp_safe_redirect( self::masked_login_url( admin_url() ) );
-			exit;
-		}
-	}
+		$login_path_relative = home_url( self::new_login_slug(), 'relative' );
+		$wp_login_relative   = site_url( 'wp-login.php', 'relative' );
 
-	public static function redirect_wp_login() {
-		if ( self::is_bypass_context() ) {
-			return;
-		}
+		// Direkter Aufruf von wp-login.php von außen -> als "versteckt" markieren.
+		if (
+			strpos( $request_uri, 'wp-login.php' ) !== false
+			|| $path === untrailingslashit( $wp_login_relative )
+		) {
+			if ( ! is_admin() ) {
+				self::$wp_login_php = true;
 
-		$action = isset( $_REQUEST['action'] )
-			? sanitize_key( wp_unslash( $_REQUEST['action'] ) )
-			: 'login';
+				$_SERVER['REQUEST_URI'] = self::user_trailingslashit( '/' . str_repeat( '-/', 10 ) );
+				$pagenow               = 'index.php';
 
-		// Core-Aktionen, die stabil weiter über wp-login.php laufen sollen
-		$allowed_core_actions = [
-			'logout',
-			'lostpassword',
-			'retrievepassword',
-			'rp',
-			'resetpass',
-			'checkemail',
-			'confirmaction',
-			'postpass',
-			'register',
-		];
-
-		if ( in_array( $action, $allowed_core_actions, true ) ) {
-			return;
-		}
-
-		$redirect_to = isset( $_REQUEST['redirect_to'] ) && $_REQUEST['redirect_to'] !== ''
-			? wp_unslash( $_REQUEST['redirect_to'] )
-			: self::current_redirect_target();
-
-		$extra = self::current_login_query_args();
-
-		wp_safe_redirect( self::masked_login_url( $redirect_to, $extra ) );
-		exit;
-	}
-
-	public static function filter_login_url( $login_url, $redirect, $force_reauth ) {
-		$extra = [];
-
-		if ( $force_reauth ) {
-			$extra['reauth'] = '1';
-		}
-
-		return self::masked_login_url( $redirect, $extra );
-	}
-
-	public static function filter_logout_url( $logout_url, $redirect ) {
-		$target = $redirect ? $redirect : self::masked_login_url();
-
-		return add_query_arg(
-			[
-				'action'      => 'logout',
-				'redirect_to' => $target,
-			],
-			site_url( 'wp-login.php', 'login' )
-		);
-	}
-
-	public static function maybe_enqueue_mask_assets() {
-		if ( ! self::is_mask_request() ) {
-			return;
-		}
-
-		// Basis-Styles für WP-Login-Look
-		wp_enqueue_style( 'dashicons' );
-		wp_enqueue_style( 'buttons' );
-		wp_enqueue_style( 'forms' );
-		wp_enqueue_style( 'login' );
-
-		if ( defined( 'BDS_URL' ) && defined( 'BDS_VERSION' ) ) {
-			wp_enqueue_style(
-				'bds-login',
-				BDS_URL . 'assets/css/login.css',
-				[ 'login' ],
-				BDS_VERSION
-			);
-		}
-	}
-
-	public static function remove_deprecated_emoji_style_hooks() {
-		remove_action( 'wp_print_styles', 'print_emoji_styles' );
-		remove_action( 'admin_print_styles', 'print_emoji_styles' );
-	}
-
-	private static function handle_mask_request() {
-		nocache_headers();
-
-		if ( is_user_logged_in() ) {
-			$target = isset( $_REQUEST['redirect_to'] ) && $_REQUEST['redirect_to'] !== ''
-				? wp_unslash( $_REQUEST['redirect_to'] )
-				: admin_url();
-
-			wp_safe_redirect( $target );
-			exit;
-		}
-
-		$error      = '';
-		$user_login = '';
-
-		if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
-			$user_login = isset( $_POST['log'] ) ? sanitize_text_field( wp_unslash( $_POST['log'] ) ) : '';
-
-			if ( self::is_rate_limited() ) {
-				$error = __( 'Zu viele Anmeldeversuche. Bitte versuche es später erneut.', 'berendsohn-digitalservice' );
-			} elseif ( self::is_honeypot_triggered() ) {
-				self::register_failed_attempt();
-				$error = self::generic_login_error();
-			} elseif (
-				! isset( $_POST['bds_login_nonce'] ) ||
-				! wp_verify_nonce(
-					sanitize_text_field( wp_unslash( $_POST['bds_login_nonce'] ) ),
-					'bds_login_action'
-				)
-			) {
-				self::register_failed_attempt();
-				$error = __( 'Sicherheitsprüfung fehlgeschlagen.', 'berendsohn-digitalservice' );
-			} else {
-				$password = isset( $_POST['pwd'] ) ? (string) wp_unslash( $_POST['pwd'] ) : '';
-				$remember = ! empty( $_POST['rememberme'] );
-
-				$redirect_to = isset( $_POST['redirect_to'] ) && $_POST['redirect_to'] !== ''
-					? wp_unslash( $_POST['redirect_to'] )
-					: admin_url();
-
-				$creds = [
-					'user_login'    => $user_login,
-					'user_password' => $password,
-					'remember'      => $remember,
-				];
-
-				$user = wp_signon( $creds, is_ssl() );
-
-				if ( is_wp_error( $user ) ) {
-					self::register_failed_attempt();
-					$error = self::generic_login_error();
-				} else {
-					self::clear_failed_attempts();
-					wp_safe_redirect( $redirect_to );
-					exit;
-				}
+				return;
 			}
 		}
 
-		self::render_form( $user_login, $error );
+		// Unser versteckter Login /mellon/
+		if ( $path === untrailingslashit( $login_path_relative ) ) {
+			$_SERVER['SCRIPT_NAME'] = '/' . ltrim( self::new_login_slug(), '/' );
+			$pagenow                = 'wp-login.php';
+		}
 	}
 
-	private static function render_form( $user_login = '', $error = '' ) {
-		$redirect_to = isset( $_REQUEST['redirect_to'] ) && $_REQUEST['redirect_to'] !== ''
-			? wp_unslash( $_REQUEST['redirect_to'] )
-			: admin_url();
+	/**
+	 * Verhindert Zugriff auf Customizer für nicht eingeloggte Nutzer.
+	 */
+	public static function setup_theme() {
+		global $pagenow;
 
-		$lost_password_url = wp_lostpassword_url( self::masked_login_url( $redirect_to ) );
-
-		status_header( 200 );
-		?>
-		<!DOCTYPE html>
-		<html <?php language_attributes(); ?>>
-		<head>
-			<meta charset="<?php bloginfo( 'charset' ); ?>">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<meta name="robots" content="noindex,nofollow">
-			<title><?php echo esc_html( get_bloginfo( 'name' ) . ' – Login' ); ?></title>
-			<?php
-			do_action( 'login_enqueue_scripts' );
-			wp_print_styles();
-			wp_print_head_scripts();
-			do_action( 'login_head' );
-			?>
-		</head>
-		<body class="login login-action-login wp-core-ui">
-			<div id="login">
-				<h1 class="screen-reader-text"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></h1>
-
-				<?php if ( ! empty( $error ) ) : ?>
-					<div id="login_error">
-						<?php echo esc_html( $error ); ?>
-					</div>
-				<?php endif; ?>
-
-				<form name="loginform" id="loginform" action="<?php echo esc_url( self::masked_login_url() ); ?>" method="post" novalidate="novalidate">
-					<p>
-						<label for="user_login"><?php esc_html_e( 'Benutzername oder E-Mail-Adresse' ); ?></label>
-						<input
-							type="text"
-							name="log"
-							id="user_login"
-							class="input"
-							value="<?php echo esc_attr( $user_login ); ?>"
-							size="20"
-							autocapitalize="off"
-							autocomplete="username"
-							required
-						>
-					</p>
-
-					<p>
-						<label for="user_pass"><?php esc_html_e( 'Passwort' ); ?></label>
-						<input
-							type="password"
-							name="pwd"
-							id="user_pass"
-							class="input"
-							value=""
-							size="20"
-							autocomplete="current-password"
-							required
-						>
-					</p>
-
-					<!-- Honeypot -->
-					<p style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
-						<label for="company_website">Website</label>
-						<input type="text" name="company_website" id="company_website" value="" tabindex="-1" autocomplete="off">
-					</p>
-
-					<p class="forgetmenot">
-						<label for="rememberme">
-							<input name="rememberme" type="checkbox" id="rememberme" value="forever">
-							<?php esc_html_e( 'Angemeldet bleiben' ); ?>
-						</label>
-					</p>
-
-					<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>">
-					<?php wp_nonce_field( 'bds_login_action', 'bds_login_nonce' ); ?>
-
-					<p class="submit">
-						<input
-							type="submit"
-							name="wp-submit"
-							id="wp-submit"
-							class="button button-primary button-large"
-							value="<?php esc_attr_e( 'Anmelden' ); ?>"
-						>
-					</p>
-				</form>
-
-				<p id="nav">
-					<a href="<?php echo esc_url( $lost_password_url ); ?>">
-						<?php esc_html_e( 'Passwort vergessen?' ); ?>
-					</a>
-				</p>
-
-				<p id="backtoblog">
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-						<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
-					</a>
-				</p>
-			</div>
-
-			<?php
-			wp_print_footer_scripts();
-			do_action( 'login_footer' );
-			?>
-		</body>
-		</html>
-		<?php
+		if ( ! is_user_logged_in() && 'customize.php' === $pagenow ) {
+			wp_die( esc_html__( 'This has been disabled.', 'berendsohn-digitalservice' ), 403 );
+		}
 	}
 
-	private static function masked_login_url( $redirect_to = '', array $extra_args = [] ) {
-		$url = home_url( '/' . trim( self::SLUG, '/' ) . '/' );
+	/**
+	 * Hier wird am Ende sauber entschieden:
+	 * - wp-admin für Gäste umleiten
+	 * - /mellon/ -> echten Core-Login laden
+	 * - direkte wp-login.php Aufrufe verstecken
+	 */
+	public static function wp_loaded() {
+		global $pagenow;
 
-		if ( ! empty( $redirect_to ) ) {
-			$extra_args['redirect_to'] = $redirect_to;
+		if ( self::is_bypass_context() ) {
+			return;
 		}
 
-		if ( ! empty( $extra_args ) ) {
-			$url = add_query_arg( $extra_args, $url );
+		$request_uri = rawurldecode( $_SERVER['REQUEST_URI'] ?? '' );
+		$request     = parse_url( $request_uri );
+		$path        = isset( $request['path'] ) ? $request['path'] : '';
+
+		// postpass nie kaputtmachen
+		if (
+			isset( $_GET['action'] ) &&
+			'postpass' === $_GET['action'] &&
+			isset( $_POST['post_password'] )
+		) {
+			return;
+		}
+
+		// Gäste nicht ins Backend lassen
+		if (
+			is_admin()
+			&& ! is_user_logged_in()
+			&& ! defined( 'WP_CLI' )
+			&& ! defined( 'DOING_AJAX' )
+			&& ! defined( 'DOING_CRON' )
+			&& $pagenow !== 'admin-post.php'
+			&& $path !== '/wp-admin/options.php'
+		) {
+			wp_safe_redirect( self::new_login_url() );
+			exit;
+		}
+
+		// /wp-admin/options.php Spezialfall
+		if ( ! is_user_logged_in() && $path === '/wp-admin/options.php' ) {
+			wp_safe_redirect( self::new_login_url() );
+			exit;
+		}
+
+		// Direkter wp-login.php Aufruf -> versteckte URL benutzen
+		if ( self::$wp_login_php ) {
+			self::wp_template_loader();
+			exit;
+		}
+
+		// Jetzt auf /mellon/ wirklich den Core-Login ausführen
+		if ( 'wp-login.php' === $pagenow ) {
+			// Bereits eingeloggt und kein spezieller Action-Request
+			if ( is_user_logged_in() && ! isset( $_REQUEST['action'] ) ) {
+				$redirect_to = admin_url();
+
+				if ( isset( $_REQUEST['redirect_to'] ) && $_REQUEST['redirect_to'] !== '' ) {
+					$redirect_to = wp_unslash( $_REQUEST['redirect_to'] );
+				}
+
+				wp_safe_redirect( $redirect_to );
+				exit;
+			}
+
+			require_once ABSPATH . 'wp-login.php';
+			exit;
+		}
+	}
+
+	/**
+	 * Alle WordPress-generierten wp-login.php URLs nach /mellon/ umbiegen.
+	 */
+	public static function filter_site_url( $url, $path, $scheme, $blog_id ) {
+		return self::filter_wp_login_php( $url, $scheme );
+	}
+
+	public static function filter_network_site_url( $url, $path, $scheme ) {
+		return self::filter_wp_login_php( $url, $scheme );
+	}
+
+	public static function filter_wp_redirect( $location, $status ) {
+		return self::filter_wp_login_php( $location );
+	}
+
+	public static function filter_login_url( $login_url, $redirect, $force_reauth ) {
+		$url = self::new_login_url();
+
+		if ( ! empty( $redirect ) ) {
+			$url = add_query_arg( 'redirect_to', $redirect, $url );
+		}
+
+		if ( $force_reauth ) {
+			$url = add_query_arg( 'reauth', '1', $url );
 		}
 
 		return $url;
 	}
 
-	private static function current_redirect_target() {
-		if ( isset( $_REQUEST['redirect_to'] ) && $_REQUEST['redirect_to'] !== '' ) {
-			return wp_unslash( $_REQUEST['redirect_to'] );
+	private static function filter_wp_login_php( $url, $scheme = null ) {
+		global $pagenow;
+
+		// Post-Passwort-Handling unangetastet lassen
+		if ( strpos( $url, 'wp-login.php?action=postpass' ) !== false ) {
+			return $url;
 		}
 
-		return admin_url();
-	}
+		if ( strpos( $url, 'wp-login.php' ) !== false ) {
+			if ( is_ssl() ) {
+				$scheme = 'https';
+			}
 
-	private static function current_login_query_args(): array {
-		$allowed = [
-			'action',
-			'checkemail',
-			'reauth',
-			'interim-login',
-		];
+			$parts = explode( '?', $url, 2 );
 
-		$out = [];
+			if ( isset( $parts[1] ) ) {
+				parse_str( $parts[1], $args );
 
-		foreach ( $allowed as $key ) {
-			if ( isset( $_REQUEST[ $key ] ) ) {
-				$out[ $key ] = wp_unslash( $_REQUEST[ $key ] );
+				if ( isset( $args['login'] ) ) {
+					$args['login'] = rawurlencode( $args['login'] );
+				}
+
+				$url = add_query_arg( $args, self::new_login_url( $scheme ) );
+			} else {
+				$url = self::new_login_url( $scheme );
 			}
 		}
 
-		return $out;
+		return $url;
 	}
 
-	private static function generic_login_error(): string {
-		return __( 'Die Anmeldedaten sind ungültig.', 'berendsohn-digitalservice' );
+	private static function new_login_slug() {
+		return trim( self::SLUG, '/' );
 	}
 
-	private static function is_honeypot_triggered(): bool {
-		return ! empty( $_POST['company_website'] );
-	}
+	private static function new_login_url( $scheme = null ) {
+		$url = home_url( '/', $scheme );
 
-	private static function is_rate_limited(): bool {
-		$lock_until = (int) get_transient( self::lockout_key() );
-
-		if ( $lock_until && time() < $lock_until ) {
-			return true;
+		if ( get_option( 'permalink_structure' ) ) {
+			return self::user_trailingslashit( $url . self::new_login_slug() );
 		}
 
-		if ( $lock_until && time() >= $lock_until ) {
-			delete_transient( self::lockout_key() );
+		return $url . '?' . self::new_login_slug();
+	}
+
+	private static function use_trailing_slashes() {
+		$structure = (string) get_option( 'permalink_structure' );
+		return '/' === substr( $structure, -1, 1 );
+	}
+
+	private static function user_trailingslashit( $string ) {
+		return self::use_trailing_slashes() ? trailingslashit( $string ) : untrailingslashit( $string );
+	}
+
+	private static function wp_template_loader() {
+		global $pagenow;
+
+		$pagenow = 'index.php';
+
+		if ( ! defined( 'WP_USE_THEMES' ) ) {
+			define( 'WP_USE_THEMES', true );
 		}
 
-		return false;
-	}
-
-	private static function register_failed_attempt() {
-		$key      = self::attempt_key();
-		$attempts = (int) get_transient( $key );
-		$attempts++;
-
-		set_transient( $key, $attempts, self::RATE_LIMIT_WINDOW );
-
-		if ( $attempts >= self::RATE_LIMIT_MAX ) {
-			set_transient( self::lockout_key(), time() + self::RATE_LIMIT_LOCKOUT, self::RATE_LIMIT_LOCKOUT );
-		}
-	}
-
-	private static function clear_failed_attempts() {
-		delete_transient( self::attempt_key() );
-		delete_transient( self::lockout_key() );
-	}
-
-	private static function attempt_key(): string {
-		return 'bds_login_attempts_' . md5( self::client_fingerprint() );
-	}
-
-	private static function lockout_key(): string {
-		return 'bds_login_lockout_' . md5( self::client_fingerprint() );
-	}
-
-	private static function client_fingerprint(): string {
-		$ip = self::client_ip();
-		return $ip ? $ip : 'unknown';
-	}
-
-	private static function client_ip(): string {
-		$keys = [
-			'HTTP_CF_CONNECTING_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'REMOTE_ADDR',
-		];
-
-		foreach ( $keys as $key ) {
-			if ( empty( $_SERVER[ $key ] ) ) {
-				continue;
-			}
-
-			$value = wp_unslash( $_SERVER[ $key ] );
-
-			if ( 'HTTP_X_FORWARDED_FOR' === $key ) {
-				$parts = explode( ',', $value );
-				$value = trim( $parts[0] );
-			}
-
-			$ip = sanitize_text_field( $value );
-
-			if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
-				return $ip;
-			}
-		}
-
-		return '';
-	}
-
-	private static function is_mask_request(): bool {
-		return (bool) get_query_var( 'bds_login' );
-	}
-
-	private static function is_wp_admin_request(): bool {
-		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			return true;
-		}
-
-		$uri = $_SERVER['REQUEST_URI'] ?? '';
-		return false !== stripos( $uri, 'wp-admin' );
+		wp();
+		require_once ABSPATH . WPINC . '/template-loader.php';
+		exit;
 	}
 
 	private static function is_bypass_context(): bool {
@@ -462,10 +270,21 @@ class Login_Mask {
 
 		$uri = $_SERVER['REQUEST_URI'] ?? '';
 
-		if ( false !== stripos( $uri, 'xmlrpc.php' ) ) {
+		if ( stripos( $uri, 'xmlrpc.php' ) !== false ) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public static function login_styles() {
+		if ( defined( 'BDS_URL' ) && defined( 'BDS_VERSION' ) ) {
+			wp_enqueue_style(
+				'bds-login',
+				BDS_URL . 'assets/css/login.css',
+				[],
+				BDS_VERSION
+			);
+		}
 	}
 }
