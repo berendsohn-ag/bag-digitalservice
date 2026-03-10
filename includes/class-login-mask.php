@@ -224,22 +224,25 @@ class Login_Mask {
 
 	public static function custom_login_logo() {
 
-		if ( ! defined( 'BDS_URL' ) ) return;
-
-		$logo = BDS_URL . 'assets/img/berendsohn-logo.png';
-
-		?>
-		<style>
-		.login h1 a {
-			background-image: url('<?php echo esc_url($logo); ?>');
-			background-size: contain;
-			background-position: center;
-			background-repeat: no-repeat;
-			width: 320px;
-			height: 110px;
-		}
-		</style>
-		<?php
+	if ( ! defined( 'BDS_URL' ) ) {
+		return;
 	}
+
+	$logo = BDS_URL . 'assets/img/berendsohn-logo.png';
+	?>
+	<style id="bds-custom-login-logo">
+		body.login div#login h1 a,
+		body.login .wp-login-logo a {
+			background-image: url('<?php echo esc_url( $logo ); ?>') !important;
+			background-size: contain !important;
+			background-position: center center !important;
+			background-repeat: no-repeat !important;
+			width: 320px !important;
+			height: 120px !important;
+			display: block !important;
+		}
+	</style>
+	<?php
+}
 
 }
