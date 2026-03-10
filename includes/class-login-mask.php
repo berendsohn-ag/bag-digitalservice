@@ -21,12 +21,16 @@ class Login_Mask {
 		add_filter( 'login_url', [ __CLASS__, 'filter_login_url' ], 10, 3 );
 
 		add_action( 'login_enqueue_scripts', [ __CLASS__, 'login_styles' ] );
+		add_action( 'login_enqueue_scripts', [ __CLASS__, 'custom_login_logo' ] );
+
+		add_filter( 'login_headerurl', [ __CLASS__, 'login_header_url' ] );
+		add_filter( 'login_headertext', [ __CLASS__, 'login_header_text' ] );
 
 		remove_action( 'template_redirect', 'wp_redirect_admin_locations', 1000 );
 	}
 
 	public static function add_rewrite() {
-		// bleibt leer für Kompatibilität
+		// leer für Kompatibilität mit Activation Hook
 	}
 
 	public static function plugins_loaded() {
@@ -89,8 +93,7 @@ class Login_Mask {
 
 		if ( $pagenow === 'wp-login.php' ) {
 
-			/* ---------- FIX für WP 6.5+ ---------- */
-
+			// Fix für WP 6.5+ Variablen
 			global $error, $user_login;
 
 			if ( ! isset( $error ) ) {
@@ -100,8 +103,6 @@ class Login_Mask {
 			if ( ! isset( $user_login ) ) {
 				$user_login = '';
 			}
-
-			/* ------------------------------------ */
 
 			require_once ABSPATH . 'wp-login.php';
 			exit;
@@ -211,6 +212,34 @@ class Login_Mask {
 
 		}
 
+	}
+
+	public static function login_header_url() {
+		return home_url('/');
+	}
+
+	public static function login_header_text() {
+		return get_bloginfo('name');
+	}
+
+	public static function custom_login_logo() {
+
+		if ( ! defined( 'BDS_URL' ) ) return;
+
+		$logo = BDS_URL . 'assets/img/berendsohn-logo.png';
+
+		?>
+		<style>
+		.login h1 a {
+			background-image: url('<?php echo esc_url($logo); ?>');
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 320px;
+			height: 110px;
+		}
+		</style>
+		<?php
 	}
 
 }
