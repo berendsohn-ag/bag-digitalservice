@@ -36,6 +36,18 @@ add_action( 'plugins_loaded', function() {
     \BDS\Admin_UI::init();
 } );
 
+// Auto-Updates nur für dieses Plugin aktivieren
+add_filter( 'auto_update_plugin', function ( $update, $item ) {
+
+    if ( isset($item->plugin) && $item->plugin === plugin_basename(BDS_FILE) ) {
+        return true;
+    }
+
+    return $update;
+
+}, 10, 2 );
+
+
 register_activation_hook( BDS_FILE, function () {
     \BDS\Login_Mask::add_rewrite();
     flush_rewrite_rules();
