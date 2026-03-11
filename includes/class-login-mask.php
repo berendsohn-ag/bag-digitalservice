@@ -10,6 +10,7 @@ class Login_Mask {
 	const SLUG = 'mellon';
 
 	private static $wp_login_php = false;
+	private static $login_alias  = false;
 
 	public static function init() {
 		add_action( 'plugins_loaded', [ __CLASS__, 'plugins_loaded' ], 9999 );
@@ -39,17 +40,25 @@ class Login_Mask {
 
 		$request_uri = rawurldecode( $_SERVER['REQUEST_URI'] ?? '' );
 		$request     = parse_url( $request_uri );
+		$path        = isset( $request['path'] ) ? untrailingslashit( $request['path'] ) : '';
 
-		if ( strpos( $request_uri, 'wp-login.php' ) !== false && ! is_admin() ) {
-			self::$wp_login_php   = true;
-			$_SERVER['REQUEST_URI'] = '/' . str_repeat( '-/', 10 );
-			$pagenow = 'index.php';
+		$masked_path = untrailingslashit( home_url( self::SLUG, 'relative' ) );
+		$login_path  = untrailingslashit( home_url( 'login', 'relative' ) );
+
+		// /login oder /login/ als Alias merken
+		if ( $path === $login_path ) {
+			self::$login_alias = true;
 			return;
 		}
 
-		$path = isset( $request['path'] ) ? untrailingslashit( $request['path'] ) : '';
+		// direkter Aufruf von wp-login.php merken
+		if ( strpos( $request_uri, 'wp-login.php' ) !== false && ! is_admin() ) {
+			self::$wp_login_php = true;
+			return;
+		}
 
-		if ( $path === home_url( self::SLUG, 'relative' ) ) {
+		// /mellon/ intern wie wp-login.php behandeln
+		if ( $path === $masked_path ) {
 			$_SERVER['SCRIPT_NAME'] = '/' . self::SLUG;
 			$pagenow = 'wp-login.php';
 		}
@@ -66,13 +75,20 @@ class Login_Mask {
 	public static function wp_loaded() {
 		global $pagenow;
 
-		if ( is_admin() && ! is_user_logged_in() ) {
-			wp_safe_redirect( self::login_url() );
+		// /login -> /mellon/
+		if ( self::$login_alias && self::is_safe_redirect_request() ) {
+			wp_safe_redirect( self::current_masked_url() );
 			exit;
 		}
 
-		if ( self::$wp_login_php ) {
-			self::template_loader();
+		// /wp-login.php -> /mellon/
+		if ( self::$wp_login_php && self::is_safe_redirect_request() ) {
+			wp_safe_redirect( self::current_masked_url() );
+			exit;
+		}
+
+		if ( is_admin() && ! is_user_logged_in() ) {
+			wp_safe_redirect( self::login_url() );
 			exit;
 		}
 
@@ -92,18 +108,19 @@ class Login_Mask {
 		}
 	}
 
-	private static function template_loader() {
-		global $pagenow;
+	private static function is_safe_redirect_request() {
+		$method = strtoupper( $_SERVER['REQUEST_METHOD'] ?? 'GET' );
+		return in_array( $method, [ 'GET', 'HEAD' ], true );
+	}
 
-		$pagenow = 'index.php';
+	private static function current_masked_url() {
+		$url = self::login_url();
 
-		if ( ! defined( 'WP_USE_THEMES' ) ) {
-			define( 'WP_USE_THEMES', true );
+		if ( ! empty( $_SERVER['QUERY_STRING'] ) ) {
+			$url .= '?' . ltrim( (string) $_SERVER['QUERY_STRING'], '?' );
 		}
 
-		wp();
-		require_once ABSPATH . WPINC . '/template-loader.php';
-		exit;
+		return $url;
 	}
 
 	public static function filter_login_url( $login_url, $redirect, $force_reauth ) {
@@ -137,7 +154,13 @@ class Login_Mask {
 
 	public static function filter_wp_login_php_redirect( $location ) {
 		if ( strpos( $location, 'wp-login.php' ) !== false ) {
-			$location = str_replace( 'wp-login.php', self::SLUG, $location );
+			$parts = explode( '?', $location, 2 );
+
+			$location = self::login_url();
+
+			if ( isset( $parts[1] ) && $parts[1] !== '' ) {
+				$location .= '?' . $parts[1];
+			}
 		}
 
 		return $location;
