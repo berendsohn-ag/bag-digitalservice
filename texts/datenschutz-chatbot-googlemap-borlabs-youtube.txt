@@ -33,15 +33,62 @@
 <h4>4.5. Widerspruchs- und Beseitigungsmöglichkeit</h4>
 <p>Die Erfassung der Daten zur Bereitstellung der Website und die Speicherung der Daten in Logfiles ist für den Betrieb der Internetseite zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit.</p>
 <h3>5. Kontaktformular und E-Mail-Kontakt</h3>
-<p>
-Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
-</p><p>
-Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
-</p>
+<h4>5.1. Beschreibung und Umfang der Datenverarbeitung</h4>
+<p>Auf unserer Internetseite ist ein Kontaktformular vorhanden, welches für die elektronische Kontaktaufnahme genutzt werden kann. Nehmen Sie diese Möglichkeit wahr, werden sowohl die Inhalte der Pflicht-Felder als auch die optionalen Inhalte an uns übermittelt und gespeichert.</p>
+<p>Für die Verarbeitung der Daten wird im Rahmen des Absendevorgangs Ihre Einwilligung eingeholt und auf diese Datenschutzerklärung verwiesen.</p>
+<p>Alternativ ist eine Kontaktaufnahme über die bereitgestellte E-Mail-Adresse möglich. In diesem Fall werden Ihre mit der E-Mail übermittelten personenbezogenen Daten gespeichert.</p>
+<p>Es erfolgt in diesem Zusammenhang keine Weitergabe der Daten an Dritte. Die Daten werden ausschließlich für die Verarbeitung der Konversation verwendet.</p>
+<h4>5.2. Rechtsgrundlage für die Datenverarbeitung</h4>
+<p>Rechtsgrundlage für die Verarbeitung der Daten ist bei Vorliegen Ihrer Einwilligung Art. 6 Abs. 1 lit. a DSGVO.</p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 lit. f DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages ab, so ist zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO.</p>
+<h4>5.3. Zweck der Datenverarbeitung</h4>
+<p>Die Verarbeitung der personenbezogenen Daten aus der Eingabemaske dient uns allein zur Bearbeitung der Kontaktaufnahme. Im Falle einer Kontaktaufnahme per E-Mail liegt hieran auch das erforderliche berechtigte Interesse an der Verarbeitung der Daten.</p>
+<h4>5.4. Dauer der Speicherung</h4>
+<p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Für die personenbezogenen Daten aus der Eingabemaske des Kontaktformulars und diejenigen, die per E-Mail übersandt wurden, ist dies dann der Fall, wenn die jeweilige Konversation mit Ihnen beendet ist. Beendet ist die Konversation dann, wenn sich aus den Umständen entnehmen lässt, dass der betroffene Sachverhalt abschließend geklärt ist.</p>
+<h4>5.5. Widerspruchs- und Beseitigungsmöglichkeit</h4>
+<p>Sie haben jederzeit die Möglichkeit, Ihre Einwilligung zur Verarbeitung der personenbezogenen Daten zu widerrufen. Nehmen Sie per E-Mail-Kontakt mit uns auf, so können Sie der Speicherung Ihrer personenbezogenen Daten jederzeit widersprechen. In einem solchen Fall kann die Konversation nicht mehr fortgeführt werden.</p>
+<p>Sie können uns gegenüber den Widerruf der Einwilligung und den Widerspruch der Speicherung über die im Impressum angegebene E-Mail-Adresse oder fernmündlich über die angegebene Telefonnummer erklären.</p>
+<p>Alle personenbezogenen Daten, die im Zuge der Kontaktaufnahme gespeichert wurden, werden in diesem Fall gelöscht.</p>
 <h3>6. Plugins und Tools</h3>
-<h4>6.1.Borlabs Cookie</h4>
+<p>6.1. KI Chatbot<br />a) Beschreibung und Umfang der Datenverarbeitung</p>
+<p>Wir setzen den KI-basierten Chatbot ein, um mit Ihnen mittels einer künstlichen Intelligenz zu kommunizieren. Anbieter ist die Firma Berendsohn AG, Friesenweg 22, 22763 Hamburg.</p>
+<p>„KI Chatbot“ ist in der Lage, ohne menschliche Hilfe auf Ihre Fragen und sonstigen Eingaben zu reagieren. Hierzu analysiert „KI Chatbot“ neben Ihren Eingaben weitere Daten, um passende Antworten zu geben (z. B. Chatverläufe). Diese Daten werden auf den Servern der Unteranbieter (s. Abschnitt e) gespeichert. Die erfassten Daten können dazu genutzt werden, um „KI Chatbot“ und das Antwortverhalten zu verbessern.</p>
+<p>b) Rechtsgrundlage für die Datenverarbeitung</p>
+<p>Rechtsgrundlage für den Einsatz von „KI Chatbot“ ist Art. 6 Abs. 1 lit. b) DSGVO, sofern dieser zur Vertragsanbahnung oder im Rahmen der Vertragserfüllung eingesetzt wird.</p>
+<p>Mit Benutzung des „KI Chatbot” willigen Sie in die Verarbeitung der eingegebenen Daten ein und erfolgt die Verarbeitung entsprechen aufgrund von 6 Abs. 1 lit. a) DSGVO. Die Verarbeitung erfolgt zudem auf Grundlage von § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TTDSG umfasst.</p>
+<p>Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TTDSG umfasst. Die Einwilligung ist jederzeit widerrufbar.</p>
+<p>In allen anderen Fällen erfolgt der Einsatz auf Grundlage des Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p>c) Zweck der Datenverarbeitung</p>
+<p>Der Zweck und gleich hin das berechtigte Interesse ergibt sich aus unserem Bedarf, Nutzern unser Leistungsangebot darstellen zu können und nach individuellem Bedarf und Wunsch Informationen hierüber zuteilen zu können.</p>
+<p>d) Dauer der Speicherung</p>
+<p>Die von Ihnen im Rahmen der Kommunikation eingegebenen Daten verbleiben bei dem angegebenen Unteranbieter (s. Abschnitt e). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
+<p>e) Unterauftragsverarbeiter</p>
+<p>Zur Bereitstellung des „KI Chatbot“ bedienen wir uns des externen Dienstleisters „Voiceglow“ (Voiceglow Kahali, Brahampuri Chandrapur, PIN 441206 India) </p>
+<p>Informationen über den Umgang mit Ihren personenbezogenen Daten durch unseren externen Dienstleister entnehmen Sie bitte der Datenschutzerklärungen direkt auf der Webseite von Voiceglow: <a href="https://voiceglow.org/legal/privacy-policy" target="_blank" rel="noopener">https://voiceglow.org/legal/privacy-policy </a></p>
+<h4>6.2. Google Maps</h4>
+<p>a) Beschreibung und Umfang der Datenverarbeitung</p>
+<p>Wir haben in unsere Webseite Kartenmaterial des Dienstes Google Maps eingebunden. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland. Um die Inhalte in Ihrem Browser darstellen zu können, muss an Google Ihre IP-Adresse übermittelt werden, denn sonst könnte Ihnen Google diese eingebundenen Inhalte nicht liefern.</p>
+<p>Diese Informationen werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Wenn Google Maps aktiviert ist, kann Google zum Zwecke der einheitlichen Darstellung der Schriftarten Google Web Fonts verwenden. Beim Aufruf von Google Maps lädt Ihr Browser die benötigten Web Fonts in ihren Browsercache, um Texte und Schriftarten korrekt anzuzeigen.</p>
+<p>b) Rechtsgrundlage für die Datenverarbeitung</p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten ist Art. 6 Abs. 1 lit. f DSGVO. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.</p>
+<p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: <a href="https://privacy.google.com/businesses/gdprcontrollerterms/" target="_blank" rel="noopener">https://privacy.google.com/businesses/gdprcontrollerterms/</a> und <a href="https://privacy.google.com/businesses/gdprcontrollerterms/sccs/" target="_blank" rel="noopener">https://privacy.google.com/businesses/gdprcontrollerterms/sccs/</a>.</p>
+<p>c) Zweck der Datenverarbeitung</p>
+<p>Der Zweck und gleichhin das berechtigte Interesse ergibt sich aus unserem Bedarf an einer ansprechenden Darstellung unseres Online-Angebots und der leichten Auffindbarkeit der auf unserer Homepage angegebenen Orte. Sie sehen etwa auf den ersten Blick, wo sich unser Firmensitz befindet. Mittels der Wegbeschreibung finden Sie den schnellsten bzw. kürzesten Weg zu uns.</p>
+<p>d) Dauer der Speicherung</p>
+<p>Manche Daten speichert Google für einen festgelegten Zeitraum. Bei anderen Daten bietet Google lediglich die Möglichkeit, diese manuell zu löschen. Ferner anonymisiert Google auch Informationen in Serverprotokollen, indem es einen Teil der IP-Adresse nach 9 bzw 18 Monaten löscht.</p>
+<p>Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">https://policies.google.com/privacy?hl=de</a>.</p>
+<h4>6.3. YouTube</h4>
+<p>a) Beschreibung und Umfang der Datenverarbeitung</p>
+<p>Wir setzen auf dieser Website Plugins der YouTube LLC, 901 Cherry Ave., San Bruno, CA 94066, USA („YouTube”), einer Tochtergesellschaft von Google LLC, ein. Es werden Videoinhalte der Plattform youtube.com in Inlineframes angezeigt. Auf die Auslieferung der Videos und damit einhergehende Verarbeitung haben wir keinen Einfluss.</p>
+<p>Ist auf unserer Website ein YouTube-Video eingebettet, stellt Ihr Browser bei deren Besuch Verbindungen zu Servern von YouTube in den USA her, um Ressourcen für die Videokomponente beziehungsweise Vorschaubilder zu laden. Dabei werden Ihre IP-Adresse und technische Verbindungsdaten übertragen. Zudem werden auf Ihrem Gerät Daten gespeichert, mit denen YouTube den verwendeten Browser wiedererkennen und Daten zum Nutzungsverhalten aggregieren bzw. die Videoaufrufe über mehrere Seiten hinweg nachvollziehen kann. YouTube kann auf diese Weise nachvollziehen, dass Sie unsere Website besucht haben, diese Information Ihrem persönlichen YouTube-Account zuordnen, sofern Sie über ein solches verfügen, und erhobene Daten zum Nutzungsverhalten für eigene geschäftliche Zwecke nutzen.</p>
+<p>b) Rechtsgrundlage für die Datenverarbeitung</p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten ist Art. 6 Abs. 1 lit. a DSGVO. Ihre Einwilligung ist jederzeit widerrufbar.</p>
+<p>c) Zweckmäßigkeit der Datenverarbeitung</p>
+<p>Unser berechtigtes Interesse besteht darin, Sie mittels Videos audiovisuell über unsere Tätigkeit und unser Angebot zu informieren und unsere Website somit nutzerfreundlicher, informativer und ansprechender zu gestalten.</p>
+<p>d) Dauer der Speicherung</p>
+<p>Die datenschutzrechtlichen Bestimmungen sind bei Nutzung dieser Videoplattform durch YouTube einzuhalten. Die vorgenannte Videoplattform wird von YouTube LLC verantwortet.</p>
+<p>Informationen zum Datenschutz und zur Datenverarbeitung von Google und deren Videoplattform erhalten Sie auf folgender Seite: <a href="https://www.google.de/intl/de/policies/privacy" target="_blank">https://www.google.de/intl/de/policies/privacy</a>.</p>
+<h4>6.4.Borlabs Cookie</h4>
 <p>
 Unsere Website nutzt die Consent-Technologie von Borlabs Cookie, um Ihre Einwilligung zur Speicherung bestimmter Cookies in Ihrem Browser oder zum Einsatz bestimmter Technologien einzuholen und diese datenschutzkonform zu dokumentieren. Anbieter dieser Technologie ist die Borlabs GmbH, Rübenkamp 32, 22305 Hamburg (im Folgenden Borlabs).
 </p><p>
@@ -50,42 +97,6 @@ Wenn Sie unsere Website betreten, wird ein Borlabs-Cookie in Ihrem Browser gespe
 Die erfassten Daten werden gespeichert, bis Sie uns zur Löschung auffordern bzw. das Borlabs-Cookie selbst löschen oder der Zweck für die Datenspeicherung entfällt. Zwingende gesetzliche Aufbewahrungsfristen bleiben unberührt. Details zur Datenverarbeitung von Borlabs Cookie finden Sie unter https://de.borlabs.io/kb/welche-daten-speichert-borlabs-cookie/.
 </p><p>
 Der Einsatz der Borlabs-Cookie-Consent-Technologie erfolgt, um die gesetzlich vorgeschriebenen Einwilligungen für den Einsatz von Cookies einzuholen. Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. c DSGVO.
-</p>
-<h4>6.2. Google Maps</h4>
-<p>
-Diese Seite nutzt den Kartendienst Google Maps. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland. Mit Hilfe dieses Dienstes können wir Kartenmaterial auf unserer Website einbinden.
-</p><p>
-Zur Nutzung der Funktionen von Google Maps ist es notwendig, Ihre IP-Adresse zu speichern. Diese Informationen werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Wenn Google Maps aktiviert ist, kann Google zum Zwecke der einheitlichen Darstellung der Schriftarten Google Fonts verwenden. Beim Aufruf von Google Maps lädt Ihr Browser die benötigten Web Fonts in ihren Browsercache, um Texte und Schriftarten korrekt anzuzeigen.
-</p><p>
-Die Nutzung von Google Maps erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote und an einer leichten Auffindbarkeit der von uns auf der Website angegebenen Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: https://privacy.google.com/businesses/gdprcontrollerterms/ und https://privacy.google.com/businesses/gdprcontrollerterms/sccs/.
-</p><p>
-Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: https://policies.google.com/privacy?hl=de.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
-</p>
-<h4>6.3. Google Tag Manager</h4>
-<p>
-Wir setzen den Google Tag Manager ein. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
-</p><p>
-Der Google Tag Manager ist ein Tool, mit dessen Hilfe wir Tracking- oder Statistik-Tools und andere Technologien auf unserer Website einbinden können. Der Google Tag Manager selbst erstellt keine Nutzerprofile, speichert keine Cookies und nimmt keine eigenständigen Analysen vor. Er dient lediglich der Verwaltung und Ausspielung der über ihn eingebundenen Tools. Der Google Tag Manager erfasst jedoch Ihre IP-Adresse, die auch an das Mutterunternehmen von Google in die Vereinigten Staaten übertragen werden kann.
-</p><p>
-Der Einsatz des Google Tag Managers erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an einer schnellen und unkomplizierten Einbindung und Verwaltung verschiedener Tools auf seiner Website. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
-</p>
-<h4>6.4. Google Ads</h4>
-<p>
-Der Websitebetreiber verwendet Google Ads. Google Ads ist ein Online-Werbeprogramm der Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.
-</p><p>
-Google Ads ermöglicht es uns Werbeanzeigen in der Google-Suchmaschine oder auf Drittwebseiten auszuspielen, wenn der Nutzer bestimmte Suchbegriffe bei Google eingibt (Keyword-Targeting). Ferner können zielgerichtete Werbeanzeigen anhand der bei Google vorhandenen Nutzerdaten (z. B. Standortdaten und Interessen) ausgespielt werden (Zielgruppen-Targeting). Wir als Websitebetreiber können diese Daten quantitativ auswerten, indem wir beispielsweise analysieren, welche Suchbegriffe zur Ausspielung unserer Werbeanzeigen geführt haben und wie viele Anzeigen zu entsprechenden Klicks geführt haben.
-</p><p>
-Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: https://policies.google.com/privacy/frameworks und https://business.safety.google/controllerterms/.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
 </p>
 <h3>7. Cookies</h3>
 <p>
@@ -111,14 +122,12 @@ Welche Cookies auf dieser Website eingesetzt werden, ist hier aufgelistet.
 <strong>Zweck:</strong> Speichert die Einstellungen zur Einwilligung für Service-Gruppen und einzelne Services.<br>
 <strong>Laufzeit:</strong> 60 Tage 
 </p>
-<h4>Google Ads</h4>
-<p>
-<strong>Name:</strong> _gcl_au<br>
-<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
-<strong>Laufzeit:</strong> 90 Tage 
-</p>
+
 <h3>8. Rechte der betroffenen Person</h3>
 <p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
+<h3>8. Rechte der betroffenen Person</h3>
+<p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
+
 <h4>8.1. Auskunftsrecht</h4>
 <p>Sie können von dem Verantwortlichen eine Bestätigung darüber verlangen, ob personenbezogene Daten, die Sie betreffen, von uns verarbeitet werden. Liegt eine solche Verarbeitung vor, können Sie von dem Verantwortlichen über folgende Informationen Auskunft verlangen:</p>
 <p>(1) die Zwecke, zu denen die personenbezogenen Daten verarbeitet werden;</p>

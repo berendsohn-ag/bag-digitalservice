@@ -40,6 +40,17 @@ Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSG
 </p><p>
 Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
 </p>
+<h4>5.1. Umgang mit Bewerberdaten</h4>
+<p>
+Wir bieten Ihnen die Möglichkeit, sich bei uns zu bewerben (z. B. per E-Mail, postalisch oder via Online-Bewerberformular). Im Folgenden informieren wir Sie über Umfang, Zweck und Verwendung Ihrer im Rahmen des Bewerbungsprozesses erhobenen personenbezogenen Daten. Wir versichern, dass die Erhebung, Verarbeitung und Nutzung Ihrer Daten in Übereinstimmung mit geltendem Datenschutzrecht und allen weiteren gesetzlichen Bestimmungen erfolgt und Ihre Daten streng vertraulich behandelt werden.
+</p><p><b>Umfang und Zweck der Datenerhebung</b> <br>Wenn Sie uns eine Bewerbung zukommen lassen, verarbeiten wir Ihre damit verbundenen personenbezogenen Daten (z. B. Kontakt- und Kommunikationsdaten, Bewerbungsunterlagen, Notizen im Rahmen von Bewerbungsgesprächen etc.), soweit dies zur Entscheidung über die Begründung eines Beschäftigungsverhältnisses erforderlich ist. Rechtsgrundlage hierfür ist § 26 BDSG nach deutschem Recht (Anbahnung eines Beschäftigungsverhältnisses), Art. 6 Abs. 1 lit. b DSGVO (allgemeine Vertragsanbahnung) und – sofern Sie eine Einwilligung erteilt haben – Art. 6 Abs. 1 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar. Ihre personenbezogenen Daten werden innerhalb unseres Unternehmens ausschließlich an Personen weitergegeben, die an der Bearbeitung Ihrer Bewerbung beteiligt sind.
+</p><p>
+Sofern die Bewerbung erfolgreich ist, werden die von Ihnen eingereichten Daten auf Grundlage von § 26 BDSG und Art. 6 Abs. 1 lit. b DSGVO zum Zwecke der Durchführung des Beschäftigungsverhältnisses in unseren Datenverarbeitungssystemen gespeichert.
+
+</p><p><b>Aufbewahrungsdauer der Daten</b><br> Sofern wir Ihnen kein Stellenangebot machen können, Sie ein Stellenangebot ablehnen oder Ihre Bewerbung zurückziehen, behalten wir uns das Recht vor, die von Ihnen übermittelten Daten auf Grundlage unserer berechtigten Interessen (Art. 6 Abs. 1 lit. f DSGVO) bis zu 6 Monate ab der Beendigung des Bewerbungsverfahrens (Ablehnung oder Zurückziehung der Bewerbung) bei uns aufzubewahren. Anschließend werden die Daten gelöscht und die physischen Bewerbungsunterlagen vernichtet. Die Aufbewahrung dient insbesondere Nachweiszwecken im Falle eines Rechtsstreits. Sofern ersichtlich ist, dass die Daten nach Ablauf der 6-Monatsfrist erforderlich sein werden (z. B. aufgrund eines drohenden oder anhängigen Rechtsstreits), findet eine Löschung erst statt, wenn der Zweck für die weitergehende Aufbewahrung entfällt.
+</p><p>
+Eine längere Aufbewahrung kann außerdem stattfinden, wenn Sie eine entsprechende Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) erteilt haben oder wenn gesetzliche Aufbewahrungspflichten der Löschung entgegenstehen.
+</p>
 <h3>6. Plugins und Tools</h3>
 <h4>6.1.Borlabs Cookie</h4>
 <p>
@@ -75,7 +86,31 @@ Der Einsatz des Google Tag Managers erfolgt auf Grundlage von Art. 6 Abs. 1 lit.
 </p><p>
 Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
 </p>
-<h4>6.4. Google Ads</h4>
+<h4>6.4. Google Analytics</h4>
+<p>
+Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.
+</p><p>
+Google Analytics ermöglicht es dem Websitebetreiber, das Verhalten der Websitebesucher zu analysieren. Hierbei erhält der Websitebetreiber verschiedene Nutzungsdaten, wie z. B. Seitenaufrufe, Verweildauer, verwendete Betriebssysteme und Herkunft des Nutzers. Diese Daten werden in einer User-ID zusammengefasst und dem jeweiligen Endgerät des Websitebesuchers zugeordnet.
+</p><p>
+Des Weiteren können wir mit Google Analytics u. a. Ihre Maus- und Scrollbewegungen und Klicks aufzeichnen. Ferner verwendet Google Analytics verschiedene Modellierungsansätze, um die erfassten Datensätze zu ergänzen und setzt Machine-Learning-Technologien bei der Datenanalyse ein.
+</p><p>
+Google Analytics verwendet Technologien, die die Wiedererkennung des Nutzers zum Zwecke der Analyse des Nutzerverhaltens ermöglichen (z. B. Cookies oder Device-Fingerprinting). Die von Google erfassten Informationen über die Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert.
+</p><p>
+Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar.
+</p><p>
+Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: https://privacy.google.com/businesses/controllerterms/mccs/.
+</p><p>
+Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
+</p><p>
+<b>IP Anonymisierung</b><br> Die Google Analytics IP-Anonymisierung ist aktiviert. Dadurch wird Ihre IP-Adresse von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum vor der Übermittlung in die USA gekürzt. Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort gekürzt. Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem Websitebetreiber zu erbringen. Die im Rahmen von Google Analytics von Ihrem Browser übermittelte IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt.
+</p><p><b>Browser Plugin</b><br> Sie können die Erfassung und Verarbeitung Ihrer Daten durch Google verhindern, indem Sie das unter dem folgenden Link verfügbare Browser-Plugin herunterladen und installieren: https://tools.google.com/dlpage/gaoptout?hl=de.
+</p><p>
+Mehr Informationen zum Umgang mit Nutzerdaten bei Google Analytics finden Sie in der Datenschutzerklärung von Google: https://support.google.com/analytics/answer/6004245?hl=de.
+Auftragsverarbeitung
+</p><p>
+Wir haben mit Google einen Vertrag zur Auftragsverarbeitung abgeschlossen und setzen die strengen Vorgaben der deutschen Datenschutzbehörden bei der Nutzung von Google Analytics vollständig um.
+</p>
+<h4>6.5. Google Ads</h4>
 <p>
 Der Websitebetreiber verwendet Google Ads. Google Ads ist ein Online-Werbeprogramm der Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.
 </p><p>
@@ -87,6 +122,23 @@ Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Ko
 </p><p>
 Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
 </p>
+<h4>6.6. WP Statistics </h4>
+<p>a) Beschreibung und Umfang der Datenverarbeitung</p>
+<p>Wir nutzen auf unserer Webseite das Tool WP Statistics, um Besucherzugriffe statistisch auszuwerten. Anbieter ist Veronalabs, ARENCO Tower, 27th Floor, Dubai Media City, Dubai, Dubai 23816, UAE (<a href="https://veronalabs.com" target="_blank" rel="noopener">https://veronalabs.com</a>).</p>
+<p>Dabei erfassen wir unteranderem</p>
+<ul>
+<li>IP-Adresse des anfragenden Rechners (anonymisiert)</li>
+<li>Website, von welcher aus der Zugriff erfolgt (Referrer-URL)</li>
+<li>verwendete Browser</li>
+<li>verwendete Suchmaschine</li>
+<li>Aktionen der Besucher (z. B. Klicks und Ansichten)</li>
+</ul>
+<p>b) Rechtsgrundlage für die Datenverarbeitung</p>
+<p>Die Speicherung von WP Statistics-Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p>c) Zweck der Datenverarbeitung</p>
+<p>Es besteht ein berechtigtes Interesse an der anonymisierten Analyse des Nutzerverhaltens, um die Webseite für den Besucher stets zu optimieren. In keinem Fall verwenden wir die erhobenen Daten zu dem Zweck, Rückschlüsse auf Ihre Person zu ziehen.</p>
+<p>d) Art und Dauer der Speicherung</p>
+<p>Die erfassten Daten werden ausschließlich lokal auf dem Webserver gespeichert, bis sie für die aufgeführten Zwecke nicht mehr genutzt werden. Eine Weitergabe der Daten an Dritte findet nicht statt.</p>
 <h3>7. Cookies</h3>
 <p>
 Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert. Session-Cookies werden nach Ende Ihres Besuchs automatisch gelöscht. Permanente Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese selbst löschen oder eine automatische Löschung durch Ihren Webbrowser erfolgt.
@@ -108,15 +160,48 @@ Welche Cookies auf dieser Website eingesetzt werden, ist hier aufgelistet.
 <strong>Laufzeit:</strong> 60 Tage 
 </p><p>
 <strong>Name:</strong> borlabs-cookie-gcs<br>
-<strong>Zweck:</strong> Speichert die Einstellungen zur Einwilligung für Service-Gruppen und einzelne Services.<br>
+<strong>Zweck:</strong> Speichert die Einstellungen zur Einwilligung füt Service-Gruppen und einzelnde Services.<br>
 <strong>Laufzeit:</strong> 60 Tage 
+</p>
+<h4>Google Tag Manager</h4>
+<p>
+<strong>Name:</strong> _ga_0M4FBWDNS7<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
+</p>
+<p>
+<strong>Name:</strong> _ga_7VH4QT77MJ<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
+</p>
+<p>
+<strong>Name:</strong> _ga<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
+</p>
+<h4>Google Analytics</h4>
+<p>
+<strong>Name:</strong> _ga_0M4FBWDNS7<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
+</p>
+<p>
+<strong>Name:</strong> _ga_7VH4QT77MJ<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
+</p>
+<p>
+<strong>Name:</strong> _ga<br>
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 2 Jahre 
 </p>
 <h4>Google Ads</h4>
 <p>
 <strong>Name:</strong> _gcl_au<br>
-<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
-<strong>Laufzeit:</strong> 90 Tage 
+<strong>Zweck:</strong> Cookie von Google zur erweiterten Script- und Ereignissteuerung.<br>
+<strong>Laufzeit:</strong> 3 Monate
 </p>
+
 <h3>8. Rechte der betroffenen Person</h3>
 <p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
 <h4>8.1. Auskunftsrecht</h4>

@@ -33,89 +33,103 @@
 <h4>4.5. Widerspruchs- und Beseitigungsmöglichkeit</h4>
 <p>Die Erfassung der Daten zur Bereitstellung der Website und die Speicherung der Daten in Logfiles ist für den Betrieb der Internetseite zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit.</p>
 <h3>5. Kontaktformular und E-Mail-Kontakt</h3>
-<p>
-Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
-</p><p>
-Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
-</p>
+<h4>5.1. Beschreibung und Umfang der Datenverarbeitung</h4>
+<p>Auf unserer Internetseite ist ein Kontaktformular vorhanden, welches für die elektronische Kontaktaufnahme genutzt werden kann. Nehmen Sie diese Möglichkeit wahr, werden sowohl die Inhalte der Pflicht-Felder als auch die optionalen Inhalte an uns übermittelt und gespeichert.</p>
+<p>Für die Verarbeitung der Daten wird im Rahmen des Absendevorgangs Ihre Einwilligung eingeholt und auf diese Datenschutzerklärung verwiesen.</p>
+<p>Alternativ ist eine Kontaktaufnahme über die bereitgestellte E-Mail-Adresse möglich. In diesem Fall werden Ihre mit der E-Mail übermittelten personenbezogenen Daten gespeichert.</p>
+<p>Es erfolgt in diesem Zusammenhang keine Weitergabe der Daten an Dritte. Die Daten werden ausschließlich für die Verarbeitung der Konversation verwendet.</p>
+<h4>5.2. Rechtsgrundlage für die Datenverarbeitung</h4>
+<p>Rechtsgrundlage für die Verarbeitung der Daten ist bei Vorliegen Ihrer Einwilligung Art. 6 Abs. 1 lit. a DSGVO.</p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 lit. f DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages ab, so ist zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO.</p>
+<h4>5.3. Zweck der Datenverarbeitung</h4>
+<p>Die Verarbeitung der personenbezogenen Daten aus der Eingabemaske dient uns allein zur Bearbeitung der Kontaktaufnahme. Im Falle einer Kontaktaufnahme per E-Mail liegt hieran auch das erforderliche berechtigte Interesse an der Verarbeitung der Daten.</p>
+<h4>5.4. Dauer der Speicherung</h4>
+<p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Für die personenbezogenen Daten aus der Eingabemaske des Kontaktformulars und diejenigen, die per E-Mail übersandt wurden, ist dies dann der Fall, wenn die jeweilige Konversation mit Ihnen beendet ist. Beendet ist die Konversation dann, wenn sich aus den Umständen entnehmen lässt, dass der betroffene Sachverhalt abschließend geklärt ist.</p>
+<h4>5.5. Widerspruchs- und Beseitigungsmöglichkeit</h4>
+<p>Sie haben jederzeit die Möglichkeit, Ihre Einwilligung zur Verarbeitung der personenbezogenen Daten zu widerrufen. Nehmen Sie per E-Mail-Kontakt mit uns auf, so können Sie der Speicherung Ihrer personenbezogenen Daten jederzeit widersprechen. In einem solchen Fall kann die Konversation nicht mehr fortgeführt werden.</p>
+<p>Sie können uns gegenüber den Widerruf der Einwilligung und den Widerspruch der Speicherung über die im Impressum angegebene E-Mail-Adresse oder fernmündlich über die angegebene Telefonnummer erklären.</p>
+<p>Alle personenbezogenen Daten, die im Zuge der Kontaktaufnahme gespeichert wurden, werden in diesem Fall gelöscht.</p>
 <h3>6. Plugins und Tools</h3>
 <h4>6.1.Borlabs Cookie</h4>
-<p>
-Unsere Website nutzt die Consent-Technologie von Borlabs Cookie, um Ihre Einwilligung zur Speicherung bestimmter Cookies in Ihrem Browser oder zum Einsatz bestimmter Technologien einzuholen und diese datenschutzkonform zu dokumentieren. Anbieter dieser Technologie ist die Borlabs GmbH, Rübenkamp 32, 22305 Hamburg (im Folgenden Borlabs).
-</p><p>
-Wenn Sie unsere Website betreten, wird ein Borlabs-Cookie in Ihrem Browser gespeichert, in dem die von Ihnen erteilten Einwilligungen oder der Widerruf dieser Einwilligungen gespeichert werden. Diese Daten werden nicht an den Anbieter von Borlabs Cookie weitergegeben.
-</p><p>
-Die erfassten Daten werden gespeichert, bis Sie uns zur Löschung auffordern bzw. das Borlabs-Cookie selbst löschen oder der Zweck für die Datenspeicherung entfällt. Zwingende gesetzliche Aufbewahrungsfristen bleiben unberührt. Details zur Datenverarbeitung von Borlabs Cookie finden Sie unter https://de.borlabs.io/kb/welche-daten-speichert-borlabs-cookie/.
-</p><p>
-Der Einsatz der Borlabs-Cookie-Consent-Technologie erfolgt, um die gesetzlich vorgeschriebenen Einwilligungen für den Einsatz von Cookies einzuholen. Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. c DSGVO.
+<p>Diese Website verwendet Borlabs Cookie, das ein technisch notwendiges Cookie (borlabs-cookie) setzt, um Ihre Cookie-Einwilligungen zu speichern.
 </p>
-<h4>6.2. Google Maps</h4>
 <p>
-Diese Seite nutzt den Kartendienst Google Maps. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland. Mit Hilfe dieses Dienstes können wir Kartenmaterial auf unserer Website einbinden.
-</p><p>
-Zur Nutzung der Funktionen von Google Maps ist es notwendig, Ihre IP-Adresse zu speichern. Diese Informationen werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Wenn Google Maps aktiviert ist, kann Google zum Zwecke der einheitlichen Darstellung der Schriftarten Google Fonts verwenden. Beim Aufruf von Google Maps lädt Ihr Browser die benötigten Web Fonts in ihren Browsercache, um Texte und Schriftarten korrekt anzuzeigen.
-</p><p>
-Die Nutzung von Google Maps erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote und an einer leichten Auffindbarkeit der von uns auf der Website angegebenen Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: https://privacy.google.com/businesses/gdprcontrollerterms/ und https://privacy.google.com/businesses/gdprcontrollerterms/sccs/.
-</p><p>
-Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: https://policies.google.com/privacy?hl=de.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
+Borlabs Cookie verarbeitet keinerlei personenbezogenen Daten.</p>
+<h4>6.2. Konfiguratoren für Bad und Heizung</h4>
+<p>Auf unserer Webseite haben Sie die Möglichkeit, mehrere elektronische Konfiguratoren zu nutzen. Über einen elektronischen
+Konfigurator (hier 3D Badplaner, Budgetplaner) können Sie das für Sie passende Badezimmer erstellen. Über einen Heizungskonfigurator
+können Sie Vorschläge für eine Heizungslösung (Wärmeanlage) ermitteln, die für Ihre Immobilie oder Wohnung passt. Dafür können Sie
+zunächst anonym standardisierte Fragen zu Ihrem Bad oder Ihrer gewünschten Heizung beantworten. Um die Konfigurationsergebnisse
+zu erhalten, müssen Sie zunächst keine persönlichen Daten eingeben. Die Konfigurationsergebnisse werden auf Ihrem Endgerät als sog.
+Cookie gespeichert, damit Sie für den Fall einer Kontaktaufnahme nicht verloren gehen und an uns zu Beratungszwecken mit übermittelt
+werden können. Im Cookie werden keine personenbezogenen Daten gespeichert. Der Cookie wird ein Jahr nach letztmaliger Nutzung der
+Webseite oder beim manuellen Löschen der Cookies in Ihrem Browser gelöscht.</p><p>
+Auf unseren Seiten haben wir Online-Formulare hinterlegt, über die Sie mit uns elektronisch Kontakt aufnehmen können. Diese
+Kontaktformulare finden Sie bei der Nutzung des Heizungskonfigurators, beim 3D-Badplaner, sowie beim Budgetkalkulator. Als
+Pflichtangaben sieht das Formular Ihren Vor- und Nachnamen, Ihre E-Mail-Adresse und Telefonnummer sowie ein Feld für Ihre Mitteilung
+an uns vor. Ihre Konfigurationsergebnisse werden ausschließlich im Fall der Nutzung der Kontaktfunktion durch Sie an uns weitergeleitet.
+Ihre persönlichen Daten sowie das Konfigurationsergebnis benötigen wir, um Ihre Anfrage bearbeiten zu können. Auf freiwilliger Basis
+können Sie uns zusätzlich Ihre Postanschrift mitteilen. Daneben ist zu uns jederzeit auch eine Kontaktaufnahme per E-Mail möglich. Die
+Kontaktaufnahme zu uns ist stets freiwillig.</p><p>
+Diese Daten verarbeiten wir ausschließlich zum Zweck der Beantwortung Ihres Anliegens bzw. zur gewünschten Kontaktaufnahme mit
+Ihnen und die damit verbundene technische Verwaltung. Rechtsgrundlagen für diese Verarbeitung sind Art. 6 Absatz 1 Satz 1 Buchstaben
+b DSGVO, weil wir die vorstehend genannten Daten zur Anbahnung, Durchführung oder Beendigung eines Vertragsverhältnisses mit
+Ihnen benötigen.</p><p>
+Dies bedeutet im Detail, dass Ihre Anfrage direkt in unserem Unternehmen eingeht. Die von Ihnen bei der Registrierung und in genutzten
+elektronischen Konfiguratoren angegebenen Daten werden zunächst ausschließlich zur Vereinbarung eines Beratungstermins mit uns
+verwendet. Wenn Sie einen Termin in einer Badausstellung wünschen, dann sind wir als Ihre Vermittler tätig und vermitteln Ihnen den
+Kontakt zu einer mit uns kooperierenden ELEMENTS Ausstellung in räumlicher Nähe. Sofern Sie die Möglichkeit nutzen, um lediglich mit
+uns in Kontakt zu treten, werden die von Ihnen gemachten Angaben zum Zwecke der Bearbeitung der Anfrage sowie für mögliche
+Anschlussfragen gespeichert. Sollten Sie kein Beratungsgespräch oder kein Angebot von uns wünschen, können Sie uns dies direkt
+mitteilen. Ihre Daten werden dann unverzüglich anonymisiert und ausschließlich zu Statistikzwecken verwendet.</p>
+<b>Verwendung von Adobe Analytics bei Nutzung der Konfiguratoren</b>
+<p>
+Bei der Nutzung von Konfiguratoren werden personenbezogene Daten verarbeitet. Dabei verarbeitete Datenkategorien: technische
+Verbindungsdaten des Serverzugriffs (IP-Adresse, Datum, Uhrzeit, abgefragte Seite, Browser-Informationen), Daten über die Nutzung der
+Website sowie die Protokollierung von Klicks auf einzelne Elemente. Zweck der Verarbeitung: Anonymisierung und Erstellung von
+Statistiken, Untersuchung des Nutzungsverhaltens und Optimierung von Inhalten.</p><p>
+Die Rechtsgrundlage für die Verarbeitung: Ihre Einwilligung nach Art. 6 (1) a DSGVO. Eine Übermittlung von Daten erfolgt: an den
+selbständigen Verantwortlichen Adobe Systems Software Ireland Limited, Citywest Business Campus, Dublin 24, Irland. Die
+Rechtsgrundlage für die Datenübermittlung an Adobe Systems Software Ireland Limited ist Ihre Einwilligung nach Art. 6 (1) a DSGVO. Für
+einen E-Mail Kontakt zum Datenschutzbeauftragten von Adobe Systems Software Ireland Limited:
+https://www.adobe.com/de/privacy.html. Dauer der Verarbeitung: endet nach spätestens zwei Jahren.
 </p>
-<h4>6.3. Google Tag Manager</h4>
+<b>Austausch mit Dritten</b>
 <p>
-Wir setzen den Google Tag Manager ein. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
-</p><p>
-Der Google Tag Manager ist ein Tool, mit dessen Hilfe wir Tracking- oder Statistik-Tools und andere Technologien auf unserer Website einbinden können. Der Google Tag Manager selbst erstellt keine Nutzerprofile, speichert keine Cookies und nimmt keine eigenständigen Analysen vor. Er dient lediglich der Verwaltung und Ausspielung der über ihn eingebundenen Tools. Der Google Tag Manager erfasst jedoch Ihre IP-Adresse, die auch an das Mutterunternehmen von Google in die Vereinigten Staaten übertragen werden kann.
-</p><p>
-Der Einsatz des Google Tag Managers erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an einer schnellen und unkomplizierten Einbindung und Verwaltung verschiedener Tools auf seiner Website. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
-</p>
-<h4>6.4. Google Ads</h4>
-<p>
-Der Websitebetreiber verwendet Google Ads. Google Ads ist ein Online-Werbeprogramm der Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.
-</p><p>
-Google Ads ermöglicht es uns Werbeanzeigen in der Google-Suchmaschine oder auf Drittwebseiten auszuspielen, wenn der Nutzer bestimmte Suchbegriffe bei Google eingibt (Keyword-Targeting). Ferner können zielgerichtete Werbeanzeigen anhand der bei Google vorhandenen Nutzerdaten (z. B. Standortdaten und Interessen) ausgespielt werden (Zielgruppen-Targeting). Wir als Websitebetreiber können diese Daten quantitativ auswerten, indem wir beispielsweise analysieren, welche Suchbegriffe zur Ausspielung unserer Werbeanzeigen geführt haben und wie viele Anzeigen zu entsprechenden Klicks geführt haben.
-</p><p>
-Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: https://policies.google.com/privacy/frameworks und https://business.safety.google/controllerterms/.
-</p><p>
-Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: https://www.dataprivacyframework.gov/participant/5780.
+Sie haben die Möglichkeit, auf unserem Onlineangebot in den Kontakt zu ELEMENTS Ausstellungen zu treten. Mit diesen
+Fachausstellungen des Großhandels unterhalten wir eine Kooperation. Von den Internetseiten dieser Unternehmen ist teilweise eine
+Weiterleitung auf unser Onlineangebot möglich.</p><p>
+Diese Unternehmen sind für den Schutz Ihrer Daten gemeinsam mit und neben uns verantwortlich, sobald Sie Ihre Daten bei Nutzung des
+3D Planers oder des Budgetplaners angeben. Zur Regelung des Datenschutzes haben wir mit der Elements GmbH einen Vertrag zwischen
+gemeinsam Verantwortlichen abgeschlossen (Art. 26 DSGVO). Dabei stellt die Elements GmbH die wesentlichen Inhalte der genannten
+Dienste, Beratungs- und Vermittlungsleistungen zur Verfügung. Wir binden diese Dienste in unser bestehendes Angebot ein.
 </p>
 <h3>7. Cookies</h3>
-<p>
-Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert. Session-Cookies werden nach Ende Ihres Besuchs automatisch gelöscht. Permanente Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese selbst löschen oder eine automatische Löschung durch Ihren Webbrowser erfolgt.
+<p>Wir verwenden Cookies. Bei Cookies handelt es sich um kleine Textdateien, die auf Ihrem Endgerät bei Aufruf der Seite gespeichert werden. Diese können weder Viren noch Schadsoftware auf Ihren Computer übertragen, jedoch Informationen enthalten, die eine Identifizierung des Nutzers ermöglichen.
 </p><p>
-Cookies können von uns (First-Party-Cookies) oder von Drittunternehmen stammen (sog. Third-Party-Cookies). Third-Party-Cookies ermöglichen die Einbindung bestimmter Dienstleistungen von Drittunternehmen innerhalb von Webseiten (z. B. Cookies zur Abwicklung von Zahlungsdienstleistungen).
-</p><p>
-Cookies haben verschiedene Funktionen. Zahlreiche Cookies sind technisch notwendig, da bestimmte Webseitenfunktionen ohne diese nicht funktionieren würden (z. B. die Warenkorbfunktion oder die Anzeige von Videos). Andere Cookies können zur Auswertung des Nutzerverhaltens oder zu Werbezwecken verwendet werden.
-</p><p>
-Cookies, die zur Durchführung des elektronischen Kommunikationsvorgangs, zur Bereitstellung bestimmter, von Ihnen erwünschter Funktionen (z. B. für die Warenkorbfunktion) oder zur Optimierung der Website (z. B. Cookies zur Messung des Webpublikums) erforderlich sind (notwendige Cookies), werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, sofern keine andere Rechtsgrundlage angegeben wird. Der Websitebetreiber hat ein berechtigtes Interesse an der Speicherung von notwendigen Cookies zur technisch fehlerfreien und optimierten Bereitstellung seiner Dienste. Sofern eine Einwilligung zur Speicherung von Cookies und vergleichbaren Wiedererkennungstechnologien abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage dieser Einwilligung (Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG); die Einwilligung ist jederzeit widerrufbar.
-</p><p>
-Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
-</p><p>
-Welche Cookies auf dieser Website eingesetzt werden, ist hier aufgelistet.
-</p>
+Es ist zwischen transienten Cookies, die gelöscht werden, sobald Ihr Browser geschlossen wird, und persistenten Cookies, die über die jeweilige Sitzung hinaus gespeichert werden und Sie beim nächsten Besuch der Website wiedererkennen, zu unterschieden.
 <h4>Borlabs</h4>
 <p>
+Im Cookie borlabs-cookie werden Ihre Einwilligungen gespeichert, die Sie beim Betreten der Website gegeben haben. Möchten Sie diese Einwilligungen widerrufen, löschen Sie einfach das Cookie in Ihrem Browser. Wenn Sie die Website neu betreten/neu laden, werden Sie erneut nach Ihrer Cookie-Einwilligung gefragt.
+</p><p>
 <strong>Name:</strong> borlabs-cookie<br>
 <strong>Zweck:</strong> Speichert die Einstellungen der Besucher, die in der Cookie Box von Borlabs Cookie ausgewählt wurden.<br>
-<strong>Laufzeit:</strong> 60 Tage 
-</p><p>
-<strong>Name:</strong> borlabs-cookie-gcs<br>
-<strong>Zweck:</strong> Speichert die Einstellungen zur Einwilligung für Service-Gruppen und einzelne Services.<br>
-<strong>Laufzeit:</strong> 60 Tage 
+<strong>Laufzeit:</strong> 12 Monate
 </p>
-<h4>Google Ads</h4>
+<h4>Konfiguratoren für Bad und Heizung</h4>
 <p>
-<strong>Name:</strong> _gcl_au<br>
-<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
-<strong>Laufzeit:</strong> 90 Tage 
+Cookies der Konfiguratoren speichern Ihre Eingaben und ermöglichen eine nahtlose Nutzung.
+</p><p>
+<strong>Name:</strong> AMCV_E47264DC5DCE7DBB0A495E2C%40AdobeOrg<br>
+<strong>Laufzeit:</strong> 1 Jahr
+</p>
+<p>
+<strong>Name:</strong> AMCVS_E47264DC5DCE7DBB0A495E2C%40AdobeOrg<br>
+<strong>Laufzeit:</strong> Sitzungsende
+</p>
+<p>
+<strong>Name:</strong> s_cc<br>
+<strong>Laufzeit:</strong> Sitzungsende
 </p>
 <h3>8. Rechte der betroffenen Person</h3>
 <p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
