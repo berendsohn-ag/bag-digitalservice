@@ -75,6 +75,10 @@ class Login_Mask {
 	public static function wp_loaded() {
 		global $pagenow;
 
+        if ( wp_doing_ajax() ) {
+        return;
+        }
+
 		// /login -> /mellon/
 		if ( self::$login_alias && self::is_safe_redirect_request() ) {
 			wp_safe_redirect( self::current_masked_url() );
@@ -87,10 +91,10 @@ class Login_Mask {
 			exit;
 		}
 
-		if ( is_admin() && ! is_user_logged_in() ) {
-			wp_safe_redirect( self::login_url() );
-			exit;
-		}
+        if ( is_admin() && ! is_user_logged_in() ) {
+           wp_safe_redirect( self::login_url() );
+           exit;
+        }
 
 		if ( 'wp-login.php' === $pagenow ) {
 			global $error, $user_login;
