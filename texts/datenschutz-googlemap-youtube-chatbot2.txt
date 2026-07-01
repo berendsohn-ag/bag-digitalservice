@@ -73,8 +73,6 @@
 <p>d) Dauer der Speicherung</p>
 <p>Die datenschutzrechtlichen Bestimmungen sind bei Nutzung dieser Videoplattform durch YouTube einzuhalten. Die vorgenannte Videoplattform wird von YouTube LLC verantwortet.</p>
 <p>Informationen zum Datenschutz und zur Datenverarbeitung von Google und deren Videoplattform erhalten Sie auf folgender Seite: <a href="https://www.google.de/intl/de/policies/privacy" target="_blank">https://www.google.de/intl/de/policies/privacy</a>.</p>
-<h3>7. Rechte der betroffenen Person</h3>
-<p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
 <h4>6.3. KI Chatbot</h4>
 <p>a) Beschreibung und Umfang der Datenverarbeitung</p>
 <p>Wir setzen den KI-basierten Chatbot ein, um mit Ihnen mittels einer künstlichen Intelligenz zu kommunizieren. Anbieter ist die Firma Berendsohn AG, Friesenweg 22, 22763 Hamburg.</p>
@@ -91,6 +89,8 @@
 <p>e) Unterauftragsverarbeiter</p>
 <p>Zur Bereitstellung des „KI Chatbot“ bedienen wir uns des externen Dienstleisters „VECTOR WIZARDS LLC“ (VECTOR WIZARDS LLC, 131 Continental Drive, Delaware 19713).</p>
 <p>Informationen über den Umgang mit Ihren personenbezogenen Daten durch unseren externen Dienstleister entnehmen Sie bitte der Datenschutzerklärungen direkt auf der Webseite von VECTOR WIZARDS LLC: <a href="https://convocore.ai/legal/privacy-policy" target="_blank" rel="noopener">https://convocore.ai/legal/privacy-policy</a></p>
+<h3>7. Rechte der betroffenen Person</h3>
+<p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
 <h4>7.1. Auskunftsrecht</h4>
 <p>Sie können von dem Verantwortlichen eine Bestätigung darüber verlangen, ob personenbezogene Daten, die Sie betreffen, von uns verarbeitet werden. Liegt eine solche Verarbeitung vor, können Sie von dem Verantwortlichen über folgende Informationen Auskunft verlangen:</p>
 <p>(1) die Zwecke, zu denen die personenbezogenen Daten verarbeitet werden;</p>
