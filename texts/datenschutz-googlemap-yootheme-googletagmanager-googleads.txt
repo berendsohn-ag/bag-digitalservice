@@ -107,8 +107,26 @@ Welche Cookies auf dieser Website eingesetzt werden, ist hier aufgelistet.
 <h4>Google Ads</h4>
 <p>
 <strong>Name:</strong> _gcl_au<br>
-<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
+<strong>Zweck:</strong> Dieses Cookie wird für Conversion Tracking verwendet.<br>
 <strong>Laufzeit:</strong> 90 Tage 
+</p>
+<h4>Google Tag</h4>
+<p>
+<strong>Name:</strong> __Secure-ENID<br>
+<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
+<strong>Laufzeit:</strong> 30 Tage 
+</p>
+<h4>Google Tag</h4>
+<p>
+<strong>Name:</strong> AEC<br>
+<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
+<strong>Laufzeit:</strong> 180 Tage 
+</p>
+<h4>Google Tag</h4>
+<p>
+<strong>Name:</strong> SOCS<br>
+<strong>Zweck:</strong> Dieses Cookie wird für Analyse- und Werbezwecke verwendet.<br>
+<strong>Laufzeit:</strong> 180 Tage 
 </p>
 <h3>8. Rechte der betroffenen Person</h3>
 <p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
