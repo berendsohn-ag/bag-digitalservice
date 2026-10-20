@@ -85,23 +85,6 @@
 <p>d) Dauer der Speicherung</p>
 <p>Manche Daten speichert Google für einen festgelegten Zeitraum. Bei anderen Daten bietet Google lediglich die Möglichkeit, diese manuell zu löschen. Ferner anonymisiert Google auch Informationen in Serverprotokollen, indem es einen Teil der IP-Adresse nach 9 bzw 18 Monaten löscht.</p>
 <p>Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">https://policies.google.com/privacy?hl=de</a>.</p>
-<h4>8.2. KI Chatbot</h4>
-<p>a) Beschreibung und Umfang der Datenverarbeitung</p>
-<p>Wir setzen den KI-basierten Chatbot ein, um mit Ihnen mittels einer künstlichen Intelligenz zu kommunizieren. Anbieter ist die Firma Berendsohn AG, Friesenweg 22, 22763 Hamburg.</p>
-<p>„KI Chatbot“ ist in der Lage, ohne menschliche Hilfe auf Ihre Fragen und sonstigen Eingaben zu reagieren. Hierzu analysiert „KI Chatbot“ neben Ihren Eingaben weitere Daten, um passende Antworten zu geben (z. B. Chatverläufe). Diese Daten werden auf den Servern der Unteranbieter (s. Abschnitt e) gespeichert. Die erfassten Daten können dazu genutzt werden, um „KI Chatbot“ und das Antwortverhalten zu verbessern.</p>
-<p>b) Rechtsgrundlage für die Datenverarbeitung</p>
-<p>Rechtsgrundlage für den Einsatz von „KI Chatbot“ ist Art. 6 Abs. 1 lit. b) DSGVO, sofern dieser zur Vertragsanbahnung oder im Rahmen der Vertragserfüllung eingesetzt wird.</p>
-<p>Mit Benutzung des „KI Chatbot” willigen Sie in die Verarbeitung der eingegebenen Daten ein und erfolgt die Verarbeitung entsprechen aufgrund von 6 Abs. 1 lit. a) DSGVO. Die Verarbeitung erfolgt zudem auf Grundlage von § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TTDSG umfasst.</p>
-<p>Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TTDSG umfasst. Die Einwilligung ist jederzeit widerrufbar.</p>
-<p>In allen anderen Fällen erfolgt der Einsatz auf Grundlage des Art. 6 Abs. 1 lit. f DSGVO.</p>
-<p>c) Zweck der Datenverarbeitung</p>
-<p>Der Zweck und gleich hin das berechtigte Interesse ergibt sich aus unserem Bedarf, Nutzern unser Leistungsangebot darstellen zu können und nach individuellem Bedarf und Wunsch Informationen hierüber zuteilen zu können. </p>
-<p>d) Dauer der Speicherung</p>
-<p>Die von Ihnen im Rahmen der Kommunikation eingegebenen Daten verbleiben bei dem angegebenen Unteranbieter (s. Abschnitt e). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
-<p>e) Unterauftragsverarbeiter</p>
-<p>Zur Bereitstellung des „KI Chatbot“ bedienen wir uns des externen Dienstleisters „stammer.ai“ (Stammer.ai, 5900 BALCONES DR STE 100, Austin, Texas 78731, United States)</p>
-<p>Informationen über den Umgang mit Ihren personenbezogenen Daten durch unseren externen Dienstleister entnehmen Sie bitte der Datenschutzerklärungen direkt auf der Webseite von stammer.ai:</p>
-<p><a href="https://docs.stammer.ai/stammer.ai-docs/support/security-and-compliance/gdpr" target="_blank" rel="noopener">https://docs.stammer.ai/stammer.ai-docs/support/security-and-compliance/gdpr</a></p>
 <h3>9. Rechte der betroffenen Person</h3>
 <p>Werden personenbezogene Daten von Ihnen verarbeitet, sind Sie Betroffener im Sinne der DSGVO, und es stehen Ihnen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
 <h4>9.1. Auskunftsrecht</h4>
